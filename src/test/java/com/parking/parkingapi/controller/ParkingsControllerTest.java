@@ -1,7 +1,8 @@
 package com.parking.parkingapi.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.parking.parkingapi.dto.Parking;
+import com.parking.parkingapi.dto.parking.Parking;
+import com.parking.parkingapi.dto.parking.ParkingStatus;
 import com.parking.parkingapi.exception.EntityNotFoundException;
 import com.parking.parkingapi.service.ParkingBusinessService;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+
+import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -50,7 +53,8 @@ class ParkingsControllerTest {
 
   @Test
   public void getExistingParking() throws Exception {
-    Parking parking = new Parking(PARKING_ID_1, PARKING_NAME_1, PARKING_ADDRESS_1, PARKING_CITY_1);
+    ParkingStatus overallStatus = new ParkingStatus(0, 0);
+    Parking parking = new Parking(PARKING_ID_1, PARKING_NAME_1, PARKING_ADDRESS_1, PARKING_CITY_1, overallStatus, new HashMap<>());
 
     Mockito.when(parkingBusinessService.find(PARKING_ID_1)).thenReturn(parking);
 

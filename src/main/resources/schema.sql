@@ -1,5 +1,11 @@
-DROP TABLE IF EXISTS park_slots;
-DROP TABLE IF EXISTS cars;
+ALTER TABLE IF EXISTS parking_logs DROP COLUMN slot_id;
+ALTER TABLE IF EXISTS parking_logs DROP COLUMN vehicle_plate;
+DROP TABLE IF EXISTS parking_logs;
+ALTER TABLE IF EXISTS parking_slots DROP CONSTRAINT UC_Parking_Slot;
+ALTER TABLE IF EXISTS parking_slots DROP COLUMN parking_id;
+DROP TABLE IF EXISTS parking_slots;
+DROP TABLE IF EXISTS vehicles;
+ALTER TABLE IF EXISTS parkings DROP CONSTRAINT UC_Parkings;
 DROP TABLE IF EXISTS parkings;
 DROP TABLE IF EXISTS pricing_policies;
 DROP TABLE IF EXISTS currencies;
@@ -30,26 +36,26 @@ CREATE TABLE parkings (
 
 CREATE TYPE engine_type AS ENUM ('gasoline', '20kw', '50kw');
 
-CREATE TABLE cars (
+CREATE TABLE vehicles (
     plate VARCHAR(10) PRIMARY KEY,
-    car_engine_type engine_type NOT NULL
+    vehicle_engine_type engine_type NOT NULL
 );
 
-CREATE TABLE park_slots (
-    slot_id INT NOT NULL,
+CREATE TABLE parking_slots (
+    id IDENTITY PRIMARY KEY,
+    slot_number INT NOT NULL,
     parking_id INT,
-    car_allowed engine_type DEFAULT 'gasoline',
+    vehicle_allowed engine_type DEFAULT 'gasoline',
     foreign key (parking_id) references parkings(id) ON DELETE CASCADE,
-    PRIMARY KEY(parking_id, slot_id)
+    CONSTRAINT UC_Parking_Slot UNIQUE (parking_id, slot_number)
 );
 
 CREATE TABLE parking_logs (
     id IDENTITY PRIMARY KEY,
     timestamp_in TIMESTAMP WITH TIME ZONE NOT NULL,
     timestamp_out TIMESTAMP WITH TIME ZONE,
-    car_plate VARCHAR(10),
-    parking_id INT,
+    vehicle_plate VARCHAR(10),
     slot_id INT,
-    foreign key (parking_id, slot_id) references park_slots(parking_id, slot_id) ON DELETE CASCADE,
-    foreign key (car_plate) references cars(plate) ON DELETE CASCADE
+    foreign key (slot_id) references parking_slots(id) ON DELETE CASCADE,
+    foreign key (vehicle_plate) references vehicles(plate) ON DELETE CASCADE
 );
