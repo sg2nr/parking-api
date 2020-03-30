@@ -20,11 +20,12 @@ CREATE TABLE pricing_policies (
 
 CREATE TABLE parkings (
     id IDENTITY PRIMARY KEY,
-    name VARCHAR(250) NOT NULL,
+    parking_name VARCHAR(250) NOT NULL,
     address VARCHAR(250) NOT NULL,
     city VARCHAR(250) NOT NULL,
     pricing_policy INT,
-    foreign key (pricing_policy) references pricing_policies(id)
+    foreign key (pricing_policy) references pricing_policies(id),
+    CONSTRAINT UC_Parkings UNIQUE (parking_name, city)
 );
 
 CREATE TYPE engine_type AS ENUM ('gasoline', '20kw', '50kw');
@@ -35,11 +36,20 @@ CREATE TABLE cars (
 );
 
 CREATE TABLE park_slots (
-    number INT NOT NULL,
-    car_plate VARCHAR(10) DEFAULT NULL,
+    slot_id INT NOT NULL,
     parking_id INT,
     car_allowed engine_type DEFAULT 'gasoline',
     foreign key (parking_id) references parkings(id) ON DELETE CASCADE,
-    foreign key (car_plate) references cars(plate),
-    PRIMARY KEY(parking_id, number)
+    PRIMARY KEY(parking_id, slot_id)
+);
+
+CREATE TABLE parking_logs (
+    id IDENTITY PRIMARY KEY,
+    timestamp_in TIMESTAMP WITH TIME ZONE NOT NULL,
+    timestamp_out TIMESTAMP WITH TIME ZONE,
+    car_plate VARCHAR(10),
+    parking_id INT,
+    slot_id INT,
+    foreign key (parking_id, slot_id) references park_slots(parking_id, slot_id) ON DELETE CASCADE,
+    foreign key (car_plate) references cars(plate) ON DELETE CASCADE
 );

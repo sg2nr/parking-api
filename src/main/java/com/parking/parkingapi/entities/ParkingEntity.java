@@ -2,17 +2,21 @@ package com.parking.parkingapi.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "parkings")
 public class ParkingEntity {
 
   @Id
+  @GeneratedValue(strategy=IDENTITY)
   private long id;
 
-  @Column(nullable = false)
+  @Column(nullable = false, name = "parking_name")
   private String name;
 
   @Column(nullable = false)
