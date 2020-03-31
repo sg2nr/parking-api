@@ -37,7 +37,7 @@ public class ParkingSlotMapper {
         .collect(toList());
   }
 
-  public ParkingSlotEntity mapSlotToEntity(ParkingEntity parkingEntity, ParkingSlot parkingSlot) {
+  private ParkingSlotEntity mapSlotToEntity(ParkingEntity parkingEntity, ParkingSlot parkingSlot) {
 
     ParkingSlotEntity slotEntity = new ParkingSlotEntity();
     slotEntity.setSlotNumber(parkingSlot.getNumber());

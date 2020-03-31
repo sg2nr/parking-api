@@ -1,11 +1,12 @@
 package com.parking.parkingapi.controller;
 
 import com.parking.parkingapi.controller.mapper.ParkingJsonMapper;
+import com.parking.parkingapi.exception.BadJsonRequest;
+import com.parking.parkingapi.exception.EntityCreationViolation;
+import com.parking.parkingapi.exception.EntityNotFoundException;
 import com.parking.parkingapi.model.parking.Parking;
 import com.parking.parkingapi.model.parking.request.CreateParkingRequest;
 import com.parking.parkingapi.model.parking.response.DisplayParkingResponse;
-import com.parking.parkingapi.exception.EntityCreationViolation;
-import com.parking.parkingapi.exception.EntityNotFoundException;
 import com.parking.parkingapi.service.ParkingBusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("parkings")
@@ -42,15 +45,19 @@ public class ParkingController {
   }
 
   @GetMapping
-  public List<Parking> findAllParkings() {
-    return businessService.findAll();
+  public List<DisplayParkingResponse> findAllParkings() {
+    List<Parking> parkingsRetrieved = businessService.findAll();
+    return parkingsRetrieved.stream().map(mapper::mapToResponse).collect(toList());
   }
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public Parking createParking(@RequestBody CreateParkingRequest request) throws EntityCreationViolation {
+  public DisplayParkingResponse createParking(@RequestBody CreateParkingRequest request)
+      throws EntityCreationViolation, BadJsonRequest {
+
     Parking requestedParking = mapper.mapToDto(request);
-    return businessService.create(requestedParking);
+    Parking createdParking = businessService.create(requestedParking);
+    return mapper.mapToResponse(createdParking);
   }
 
   @DeleteMapping("/{parkingId}")

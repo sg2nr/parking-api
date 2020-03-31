@@ -1,5 +1,6 @@
 package com.parking.parkingapi.controller.mapper;
 
+import com.parking.parkingapi.exception.BadJsonRequest;
 import com.parking.parkingapi.model.common.ParkingServiceType;
 import com.parking.parkingapi.model.parking.Parking;
 import com.parking.parkingapi.model.parking.ParkingBuilder;
@@ -10,7 +11,9 @@ import com.parking.parkingapi.model.parking.response.ParkingStatistics;
 import com.parking.parkingapi.model.parking.response.ParkingStatus;
 import com.parking.parkingapi.model.parkingslot.ParkingSlot;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -23,13 +26,13 @@ import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toMap;
 
 /**
- * This class is intended for the mapping JSON - DTO and vice-versa of Parking
+ * This class is intended for the mapping JSON - DTO, and vice-versa, of Parking
  * objects.
  */
 @Component
 public class ParkingJsonMapper {
 
-  public DisplayParkingResponse mapToResponse(Parking parking) {
+  public DisplayParkingResponse mapToResponse(@NotNull Parking parking) {
 
     return DisplayParkingResponseBuilder.builder()
         .withId(parking.getId())
@@ -40,13 +43,15 @@ public class ParkingJsonMapper {
         .build();
   }
 
-  public Parking mapToDto(CreateParkingRequest request) {
+  public Parking mapToDto(@NotNull CreateParkingRequest request) throws BadJsonRequest {
 
-    List<ParkingSlot> parkingSlots = request.getRequestedSlots().entrySet()
-        .stream()
-        .map(r -> createParkingSlots(r.getKey(), r.getValue()))
-        .flatMap(Collection::stream)
-        .collect(Collectors.toList());
+    // Requested slots are mandatory
+    Map<ParkingServiceType, Integer> requestedSlots = request.getRequestedSlots();
+    if (CollectionUtils.isEmpty(requestedSlots)) {
+      throw new BadJsonRequest("Element 'requestedSlots' is mandatory");
+    }
+
+    List<ParkingSlot> parkingSlots = createParkingSlots(requestedSlots);
 
     return ParkingBuilder.builder()
         .withName(request.getName())
@@ -54,6 +59,15 @@ public class ParkingJsonMapper {
         .withCity(request.getCity())
         .withParkingSlots(parkingSlots)
         .build();
+  }
+
+  private List<ParkingSlot> createParkingSlots(Map<ParkingServiceType, Integer> requestedSlots) {
+    AtomicInteger slotNumber = new AtomicInteger(1);
+    return requestedSlots.entrySet()
+        .stream()
+        .map(r -> createParkingSlots(slotNumber, r.getKey(), r.getValue()))
+        .flatMap(Collection::stream)
+        .collect(Collectors.toList());
   }
 
   private ParkingStatistics mapParkingStatistics(List<ParkingSlot> parkingSlots) {
@@ -76,8 +90,7 @@ public class ParkingJsonMapper {
     return new ParkingStatistics(overallStatus, statusPerServiceType);
   }
 
-  private List<ParkingSlot> createParkingSlots(ParkingServiceType type, int size) {
-    AtomicInteger slotNumber = new AtomicInteger(1);
+  private List<ParkingSlot> createParkingSlots(AtomicInteger slotNumber, ParkingServiceType type, int size) {
     return Stream.generate(ParkingSlot::new)
         .limit(size)
         .map(s -> {
