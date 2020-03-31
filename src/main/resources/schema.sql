@@ -29,7 +29,7 @@ CREATE TABLE parkings (
     parking_name VARCHAR(250) NOT NULL,
     address VARCHAR(250) NOT NULL,
     city VARCHAR(250) NOT NULL,
-    pricing_policy INT,
+    pricing_policy INT DEFAULT 1,
     foreign key (pricing_policy) references pricing_policies(id),
     CONSTRAINT UC_Parkings UNIQUE (parking_name, city)
 );

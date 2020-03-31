@@ -1,6 +1,6 @@
 package com.parking.parkingapi.dao;
 
-import com.parking.parkingapi.entities.ParkingEntity;
+import com.parking.parkingapi.model.entities.ParkingEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
