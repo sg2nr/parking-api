@@ -63,8 +63,8 @@ public final class OrderDtoBuilder {
     return this;
   }
 
-  public OrderDto build() {
-    OrderDto orderDto = new OrderDto();
+  public OrderDO build() {
+    OrderDO orderDto = new OrderDO();
     orderDto.setVehicle(vehicle);
     orderDto.setParkingId(parkingId);
     orderDto.setSlotNumber(slotNumber);

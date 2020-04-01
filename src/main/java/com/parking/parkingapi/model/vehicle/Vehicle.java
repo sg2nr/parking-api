@@ -1,12 +1,12 @@
 package com.parking.parkingapi.model.vehicle;
 
-import com.parking.parkingapi.model.common.ParkingApiDto;
+import com.parking.parkingapi.model.common.ParkingApiDO;
 import com.parking.parkingapi.model.common.ParkingServiceType;
 
 /**
  * Abstraction of a vehicle.
  */
-public abstract class Vehicle implements ParkingApiDto {
+public abstract class Vehicle implements ParkingApiDO {
 
   private String plate;
 

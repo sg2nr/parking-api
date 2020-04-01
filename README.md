@@ -76,7 +76,8 @@ Then: `java -jar target/parking-api-0.0.1-SNAPSHOT.jar`
 The API is reachable at `localhost:8080`.
 
 ### Database
-In order to visualize the database, you can use the graphic consolle by typing the following URL on your web browser:
+The project includes a H2 database. During the application start up, the database is filled with sample data.
+In order to visualize the database, you can use the graphic console by typing the following URL on your web browser:
 `http://localhost:8080/h2-console/`
 
 No password is needed.

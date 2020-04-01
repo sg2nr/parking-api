@@ -11,7 +11,7 @@ import com.parking.parkingapi.exception.OrderNotFoundException;
 import com.parking.parkingapi.exception.TemporaryDataInconsistencyException;
 import com.parking.parkingapi.exception.VehicleAlreadyParkedException;
 import com.parking.parkingapi.model.order.response.CheckOutResponse;
-import com.parking.parkingapi.model.order.OrderDto;
+import com.parking.parkingapi.model.order.OrderDO;
 import com.parking.parkingapi.model.order.request.OrderRequest;
 import com.parking.parkingapi.model.order.response.OrderResponse;
 import com.parking.parkingapi.service.CheckInOrchestrator;
@@ -49,7 +49,7 @@ public class OrderController {
       throws EntityNotFoundException, EntityCreationViolation, NoSlotAvailableException,
       VehicleAlreadyParkedException, InvalidInputDataException {
 
-    OrderDto order = checkInOrchestrator.run(orderJsonMapper.mapToDto(request, parkingId));
+    OrderDO order = checkInOrchestrator.run(orderJsonMapper.mapToDto(request, parkingId));
     return orderJsonMapper.mapToResponse(order);
   }
 
@@ -58,10 +58,10 @@ public class OrderController {
   public CheckOutResponse checkOut(@RequestParam long orderId) throws OrderNotFoundException,
       TemporaryDataInconsistencyException, NoPricingPolicyFound, CheckOutAlreadyPerformedException {
 
-    OrderDto orderDtoRequest = new OrderDto();
+    OrderDO orderDtoRequest = new OrderDO();
     orderDtoRequest.setOrderId(orderId);
 
-    OrderDto orderDtoResponse = checkOutOrchestrator.run(orderDtoRequest);
+    OrderDO orderDtoResponse = checkOutOrchestrator.run(orderDtoRequest);
     return orderJsonMapper.mapToCheckoutResponse(orderDtoResponse);
   }
 

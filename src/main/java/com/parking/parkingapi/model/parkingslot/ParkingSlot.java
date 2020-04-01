@@ -1,6 +1,6 @@
 package com.parking.parkingapi.model.parkingslot;
 
-import com.parking.parkingapi.model.common.ParkingApiDto;
+import com.parking.parkingapi.model.common.ParkingApiDO;
 import com.parking.parkingapi.model.vehicle.Vehicle;
 import com.parking.parkingapi.model.common.ParkingServiceType;
 
@@ -10,7 +10,7 @@ import java.util.Objects;
  * It represents a parking slot and provides method to allow a vehicle
  * to use it or not.
  */
-public class ParkingSlot implements ParkingApiDto {
+public class ParkingSlot implements ParkingApiDO {
 
   private long id;
 

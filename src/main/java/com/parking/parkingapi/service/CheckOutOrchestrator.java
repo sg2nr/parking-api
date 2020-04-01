@@ -7,7 +7,7 @@ import com.parking.parkingapi.exception.OrderNotFoundException;
 import com.parking.parkingapi.exception.TemporaryDataInconsistencyException;
 import com.parking.parkingapi.model.entities.ParkingEntity;
 import com.parking.parkingapi.model.entities.ParkingLogEntity;
-import com.parking.parkingapi.model.order.OrderDto;
+import com.parking.parkingapi.model.order.OrderDO;
 import com.parking.parkingapi.model.order.OrderDtoBuilder;
 import com.parking.parkingapi.model.pricing.Price;
 import com.parking.parkingapi.model.pricing.PricingPolicy;
@@ -24,7 +24,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Component
-public class CheckOutOrchestrator implements Orchestrator<OrderDto> {
+public class CheckOutOrchestrator implements Orchestrator<OrderDO> {
 
   private static final Logger LOG = LoggerFactory.getLogger(CheckOutOrchestrator.class);
 
@@ -45,7 +45,7 @@ public class CheckOutOrchestrator implements Orchestrator<OrderDto> {
   }
 
   @Override
-  public OrderDto run(OrderDto orderDto) throws OrderNotFoundException, NoPricingPolicyFound,
+  public OrderDO run(OrderDO orderDto) throws OrderNotFoundException, NoPricingPolicyFound,
       TemporaryDataInconsistencyException, CheckOutAlreadyPerformedException {
 
     long orderId = orderDto.getOrderId();

@@ -6,7 +6,7 @@ import com.parking.parkingapi.exception.EntityCreationViolation;
 import com.parking.parkingapi.exception.EntityNotFoundException;
 import com.parking.parkingapi.exception.NoSlotAvailableException;
 import com.parking.parkingapi.exception.VehicleAlreadyParkedException;
-import com.parking.parkingapi.model.order.OrderDto;
+import com.parking.parkingapi.model.order.OrderDO;
 import com.parking.parkingapi.model.vehicle.Vehicle;
 import com.parking.parkingapi.model.entities.ParkingLogEntity;
 import com.parking.parkingapi.model.entities.ParkingSlotEntity;
@@ -24,7 +24,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Component
-public class CheckInOrchestrator implements Orchestrator<OrderDto> {
+public class CheckInOrchestrator implements Orchestrator<OrderDO> {
 
   private static final Logger LOG = LoggerFactory.getLogger(CheckInOrchestrator.class);
 
@@ -56,7 +56,7 @@ public class CheckInOrchestrator implements Orchestrator<OrderDto> {
   }
 
   @Override
-  public OrderDto run(OrderDto orderDto) throws EntityCreationViolation, NoSlotAvailableException,
+  public OrderDO run(OrderDO orderDto) throws EntityCreationViolation, NoSlotAvailableException,
       VehicleAlreadyParkedException, EntityNotFoundException {
 
     Vehicle vehicle = vehicleManagerService.create(orderDto.getVehicle());
@@ -74,13 +74,13 @@ public class CheckInOrchestrator implements Orchestrator<OrderDto> {
     return orderDto;
   }
 
-  private ParkingLogEntity registerCheckIn(OrderDto orderDto, VehicleEntity vehicleEntity) throws EntityNotFoundException, NoSlotAvailableException {
+  private ParkingLogEntity registerCheckIn(OrderDO orderDto, VehicleEntity vehicleEntity) throws EntityNotFoundException, NoSlotAvailableException {
     ParkingLogEntity logEntity = createParkingLogEntity(orderDto, vehicleEntity);
 
     return parkingLogsDao.save(logEntity);
   }
 
-  private ParkingLogEntity createParkingLogEntity(OrderDto orderDto, VehicleEntity vehicleEntity)
+  private ParkingLogEntity createParkingLogEntity(OrderDO orderDto, VehicleEntity vehicleEntity)
       throws EntityNotFoundException, NoSlotAvailableException {
     ParkingSlotEntity parkingSlotEntity = getParkingSlotEntity(orderDto);
     orderDto.setSlotNumber(parkingSlotEntity.getSlotNumber());
@@ -92,7 +92,7 @@ public class CheckInOrchestrator implements Orchestrator<OrderDto> {
     return logEntity;
   }
 
-  private ParkingSlotEntity getParkingSlotEntity(OrderDto orderDto)
+  private ParkingSlotEntity getParkingSlotEntity(OrderDO orderDto)
       throws EntityNotFoundException, NoSlotAvailableException {
     Parking parking = parkingManagerService.find(orderDto.getParkingId());
 

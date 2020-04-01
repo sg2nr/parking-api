@@ -1,6 +1,6 @@
 package com.parking.parkingapi.model.parking;
 
-import com.parking.parkingapi.model.common.ParkingApiDto;
+import com.parking.parkingapi.model.common.ParkingApiDO;
 import com.parking.parkingapi.model.parkingslot.ParkingSlot;
 import com.parking.parkingapi.model.pricing.PricingPolicy;
 
@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Data Transfer Object representing a Parking lot.
  */
-public class Parking implements ParkingApiDto {
+public class Parking implements ParkingApiDO {
 
   private long id;
 

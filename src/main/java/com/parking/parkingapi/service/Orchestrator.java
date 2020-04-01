@@ -1,6 +1,6 @@
 package com.parking.parkingapi.service;
 
-import com.parking.parkingapi.model.common.ParkingApiDto;
+import com.parking.parkingapi.model.common.ParkingApiDO;
 
 /**
  * Orchestrators are service that perform operations which are more
@@ -9,9 +9,9 @@ import com.parking.parkingapi.model.common.ParkingApiDto;
  * Orchestrators calls different ManagerServices and DAOs.
  *
  * @param <T>
- *    The DTO handled by the orchestrator
+ *    The Domain object handled by the orchestrator
  */
-public interface Orchestrator<T extends ParkingApiDto> {
+public interface Orchestrator<T extends ParkingApiDO> {
 
   /**
    * Start executing the orchestrator

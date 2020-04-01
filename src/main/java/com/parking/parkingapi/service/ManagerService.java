@@ -1,6 +1,6 @@
 package com.parking.parkingapi.service;
 
-import com.parking.parkingapi.model.common.ParkingApiDto;
+import com.parking.parkingapi.model.common.ParkingApiDO;
 import com.parking.parkingapi.exception.EntityNotFoundException;
 import com.parking.parkingapi.exception.EntityCreationViolation;
 
@@ -12,11 +12,11 @@ import java.util.List;
  * ManagerService interface provides most common CRUD operations.
  *
  * @param <T>
- *   The corresponding DTO
+ *   The corresponding Domain object
  * @param <ID>
  *   The entity identifier
  */
-public interface ManagerService<T extends ParkingApiDto, ID extends Serializable> {
+public interface ManagerService<T extends ParkingApiDO, ID extends Serializable> {
 
   T find(ID id) throws EntityNotFoundException;
 

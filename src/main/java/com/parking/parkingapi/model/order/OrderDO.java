@@ -1,6 +1,6 @@
 package com.parking.parkingapi.model.order;
 
-import com.parking.parkingapi.model.common.ParkingApiDto;
+import com.parking.parkingapi.model.common.ParkingApiDO;
 import com.parking.parkingapi.model.pricing.Price;
 import com.parking.parkingapi.model.vehicle.Vehicle;
 
@@ -10,7 +10,7 @@ import java.time.ZonedDateTime;
  * DTO to support the check-in and check-out of a
  * vehicle.
  */
-public class OrderDto implements ParkingApiDto {
+public class OrderDO implements ParkingApiDO {
 
   private Vehicle vehicle;
 
@@ -26,7 +26,7 @@ public class OrderDto implements ParkingApiDto {
 
   private long orderId;
 
-  public OrderDto() {
+  public OrderDO() {
   }
 
   public Vehicle getVehicle() {

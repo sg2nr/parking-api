@@ -7,7 +7,7 @@ import com.parking.parkingapi.model.order.response.CheckOutResponseBuilder;
 import com.parking.parkingapi.model.order.response.OrderResponse;
 import com.parking.parkingapi.model.order.response.OrderResponseBuilder;
 import com.parking.parkingapi.model.vehicle.Car;
-import com.parking.parkingapi.model.order.OrderDto;
+import com.parking.parkingapi.model.order.OrderDO;
 import com.parking.parkingapi.model.order.OrderDtoBuilder;
 import com.parking.parkingapi.model.vehicle.Vehicle;
 import org.slf4j.Logger;
@@ -27,7 +27,7 @@ public class OrderJsonMapper {
 
   public static final String NO_MANDATORY_ELEMENTS_ERROR_MESSAGE = "'carPlate' and 'serviceRequested' are mandatory.";
 
-  public OrderDto mapToDto(OrderRequest request, long parkingId) throws InvalidInputDataException {
+  public OrderDO mapToDto(OrderRequest request, long parkingId) throws InvalidInputDataException {
 
     if (Objects.isNull(request.getCarPlate()) || Objects.isNull(request.getServiceRequested())) {
       LOG.error(NO_MANDATORY_ELEMENTS_ERROR_MESSAGE);
@@ -42,7 +42,7 @@ public class OrderJsonMapper {
         .build();
   }
 
-  public OrderResponse mapToResponse(OrderDto orderDto) {
+  public OrderResponse mapToResponse(OrderDO orderDto) {
     return OrderResponseBuilder.builder()
         .withCarPlate(orderDto.getVehicle().getPlate())
         .withCheckin(orderDto.getTimeStampIn())
@@ -52,7 +52,7 @@ public class OrderJsonMapper {
         .build();
   }
 
-  public CheckOutResponse mapToCheckoutResponse(OrderDto orderDto) {
+  public CheckOutResponse mapToCheckoutResponse(OrderDO orderDto) {
     OrderResponse orderDetails = mapToResponse(orderDto);
 
     return CheckOutResponseBuilder.builder()

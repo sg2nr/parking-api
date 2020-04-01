@@ -1,0 +1,927 @@
+{
+	"info": {
+		"_postman_id": "a27dbd3e-d05f-49cc-8892-0c12c0255b8c",
+		"name": "Parking-Api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "parkings",
+			"item": [
+				{
+					"name": "Retrieve all parkings",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "476044d4-8b22-4160-906e-be3419fb2ba2",
+								"exec": [
+									"let response = pm.response.json();",
+									"",
+									"pm.test(\"All parkings successfully returned\", () => {",
+									"    pm.expect(response).to.be.an('array');",
+									"    ",
+									"    response.forEach(p => {",
+									"        pm.expect(p.id).to.be.not.undefined;",
+									"        pm.expect(p.name).to.be.not.undefined;",
+									"        pm.expect(p.address).to.be.not.undefined;",
+									"        pm.expect(p.city).to.be.not.undefined;",
+									"        pm.expect(p.statistics).to.be.not.undefined;",
+									"        pm.expect(p.pricingPolicy).to.be.not.undefined;",
+									"    });",
+									"});",
+									"",
+									"pm.test(\"No error returned\", () => {",
+									"    pm.expect(response.error).to.be.undefined;",
+									"});",
+									"",
+									"pm.test(\"Successful GET request\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.response.to.be.json;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Acc",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/parkings",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"parkings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve parking with id=1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "476044d4-8b22-4160-906e-be3419fb2ba2",
+								"exec": [
+									"let response = pm.response.json();",
+									"",
+									"pm.test(\"Parking with id=1 is correctly returned\", () => {",
+									"    pm.expect(response.id).to.be.equal(1);",
+									"    pm.expect(response.name).to.be.not.undefined;",
+									"    pm.expect(response.address).to.be.not.undefined;",
+									"    pm.expect(response.city).to.be.not.undefined;",
+									"    pm.expect(response.statistics).to.be.not.undefined;",
+									"    pm.expect(response.pricingPolicy).to.be.not.undefined;",
+									"});",
+									"",
+									"pm.test(\"No error returned\", () => {",
+									"    pm.expect(response.error).to.be.undefined;",
+									"});",
+									"",
+									"pm.test(\"Successful GET request\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.response.to.be.json;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Acc",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/parkings/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"parkings",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[Error case] Retrieve parking with id=999",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5899ac6f-47c8-4699-b323-a24bf2cb2ba8",
+								"exec": [
+									"let response = pm.response.json();",
+									"",
+									"pm.test(\"Error returned\", () => {",
+									"    pm.expect(response.error).to.be.not.undefined;",
+									"});",
+									"",
+									"pm.test(\"Bad Request (400) status returned\", function () {",
+									"    pm.response.to.have.status(400);",
+									"    pm.response.to.be.json;",
+									"    pm.expect(response.status).to.be.equal(400);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/parkings/999",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"parkings",
+								"999"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve pricing policies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "476044d4-8b22-4160-906e-be3419fb2ba2",
+								"exec": [
+									"let response = pm.response.json();",
+									"",
+									"pm.test(\"All pricing policies successfully returned\", () => {",
+									"    pm.expect(response).to.be.an('array');",
+									"    ",
+									"    response.forEach(p => {",
+									"        pm.expect(p.id).to.be.not.undefined;",
+									"        pm.expect(p.policyCurrency).to.be.not.undefined;",
+									"    });",
+									"});",
+									"",
+									"pm.test(\"No error returned\", () => {",
+									"    pm.expect(response.error).to.be.undefined;",
+									"});",
+									"",
+									"pm.test(\"Successful GET request\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.response.to.be.json;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Acc",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/pricing-policies",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pricing-policies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a new parking",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5899ac6f-47c8-4699-b323-a24bf2cb2ba8",
+								"exec": [
+									"let response = pm.response.json();",
+									"",
+									"pm.test(\"New Parking correctly returned\", () => {",
+									"    pm.expect(response.id).to.be.not.undefined;",
+									"    pm.expect(response.name).to.be.not.undefined;",
+									"    pm.expect(response.address).to.be.not.undefined;",
+									"    pm.expect(response.city).to.be.not.undefined;",
+									"    pm.expect(response.statistics).to.be.not.undefined;",
+									"    pm.expect(response.pricingPolicy).to.be.not.undefined;",
+									"});",
+									"",
+									"pm.test(\"No error returned\", () => {",
+									"    pm.expect(response.error).to.be.undefined;",
+									"});",
+									"",
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.response.to.have.status(201);",
+									"    pm.response.to.be.json;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Parking de Sophia\",\r\n    \"address\": \"Sophia Antipolis\",\r\n    \"city\": \"Biot\",\r\n    \"requestedSlots\": {\r\n        \"50KwPowerSupply\": 5,\r\n        \"StandardParking\": 50,\r\n        \"20KwPowerSupply\": 2\r\n    },\r\n    \"pricingPolicyId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/parkings/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"parkings",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[Error case] Create again the same parking",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5899ac6f-47c8-4699-b323-a24bf2cb2ba8",
+								"exec": [
+									"let response = pm.response.json();",
+									"",
+									"pm.test(\"Error returned\", () => {",
+									"    pm.expect(response.error).to.be.not.undefined;",
+									"});",
+									"",
+									"pm.test(\"Bad Request (400) status returned\", function () {",
+									"    pm.response.to.have.status(400);",
+									"    pm.response.to.be.json;",
+									"    pm.expect(response.status).to.be.equal(400);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Parking de Sophia\",\r\n    \"address\": \"Sophia Antipolis\",\r\n    \"city\": \"Biot\",\r\n    \"requestedSlots\": {\r\n        \"50KwPowerSupply\": 5,\r\n        \"StandardParking\": 50,\r\n        \"20KwPowerSupply\": 2\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/parkings/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"parkings",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete parking with id=2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "476044d4-8b22-4160-906e-be3419fb2ba2",
+								"exec": [
+									"pm.test(\"Successful DELETE request\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Acc",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/parkings/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"parkings",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "order",
+			"item": [
+				{
+					"name": "Retrieve pricing policies ID = 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "476044d4-8b22-4160-906e-be3419fb2ba2",
+								"exec": [
+									"let response = pm.response.json();",
+									"",
+									"pm.test(\"Policy successfully returned\", () => {",
+									"    pm.expect(response).to.be.not.undefined;",
+									"    pm.expect(response.policyCurrency).to.be.not.undefined;",
+									"});",
+									"",
+									"pm.test(\"No error returned\", () => {",
+									"    pm.expect(response.error).to.be.undefined;",
+									"});",
+									"",
+									"pm.test(\"Successful GET request\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.response.to.be.json;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Acc",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/pricing-policies/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pricing-policies",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check-in car in parking = 1 (price per hour = 3.50 EUR)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5899ac6f-47c8-4699-b323-a24bf2cb2ba8",
+								"exec": [
+									"let response = pm.response.json();",
+									"",
+									"pm.test(\"Check-in successful\", () => {",
+									"    pm.expect(response.orderId).to.be.not.undefined;",
+									"    pm.expect(response.checkin).to.be.not.undefined;",
+									"    pm.expect(response.carPlate).to.be.not.undefined;",
+									"    pm.expect(response.parkingId).to.be.not.undefined;",
+									"    pm.expect(response.slotNumber).to.be.not.undefined;",
+									"});",
+									"",
+									"pm.test(\"No error returned\", () => {",
+									"    pm.expect(response.error).to.be.undefined;",
+									"});",
+									"",
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.response.to.have.status(201);",
+									"    pm.response.to.be.json;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"carPlate\": \"ZZ98709\",\r\n    \"serviceRequested\": \"StandardParking\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/parkings/1/order",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"parkings",
+								"1",
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[Error case] Check-in car - no slot availables",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5899ac6f-47c8-4699-b323-a24bf2cb2ba8",
+								"exec": [
+									"let response = pm.response.json();",
+									"",
+									"pm.test(\"Error returned\", () => {",
+									"    pm.expect(response.error).to.be.not.undefined;",
+									"    pm.expect(response.message).to.be.equal(\"No slot available.\");",
+									"});",
+									"",
+									"pm.test(\"Bad Request (400) status returned\", function () {",
+									"    pm.response.to.have.status(400);",
+									"    pm.response.to.be.json;",
+									"    pm.expect(response.status).to.be.equal(400);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"carPlate\": \"YY32156\",\r\n    \"serviceRequested\": \"50KwPowerSupply\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/parkings/1/order",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"parkings",
+								"1",
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[Error case] Check-in car - Car already parked",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5899ac6f-47c8-4699-b323-a24bf2cb2ba8",
+								"exec": [
+									"let response = pm.response.json();",
+									"",
+									"pm.test(\"Error returned\", () => {",
+									"    pm.expect(response.error).to.be.not.undefined;",
+									"    pm.expect(response.message).to.be.equals(\"Vehicle is currently parked.\");",
+									"});",
+									"",
+									"pm.test(\"Bad Request (400) status returned\", function () {",
+									"    pm.response.to.have.status(400);",
+									"    pm.response.to.be.json;",
+									"    pm.expect(response.status).to.be.equal(400);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"carPlate\": \"ZZ98709\",\r\n    \"serviceRequested\": \"StandardParking\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/parkings/1/order",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"parkings",
+								"1",
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check-out car from parking = 1 (price per hour = 3.5 EUR)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5899ac6f-47c8-4699-b323-a24bf2cb2ba8",
+								"exec": [
+									"let response = pm.response.json();",
+									"",
+									"pm.test(\"Checkout successful\", () => {",
+									"    let orderDetails = response.orderDetails;",
+									"    ",
+									"    pm.expect(orderDetails).to.be.not.undefined;",
+									"    pm.expect(orderDetails.checkin).to.be.not.undefined;",
+									"    pm.expect(orderDetails.carPlate).to.be.not.undefined;",
+									"    pm.expect(orderDetails.parkingId).to.be.not.undefined;",
+									"    pm.expect(orderDetails.slotNumber).to.be.not.undefined;",
+									"    ",
+									"    pm.expect(response.amountToPay).to.be.not.undefined;",
+									"    pm.expect(response.amountToPay.amount).to.be.not.undefined;",
+									"    pm.expect(response.amountToPay.currency).to.be.not.undefined;",
+									"});",
+									"",
+									"pm.test(\"No error returned\", () => {",
+									"    pm.expect(response.error).to.be.undefined;",
+									"});",
+									"",
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.response.to.have.status(201);",
+									"    pm.response.to.be.json;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/parkings/checkout?orderId=1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"parkings",
+								"checkout"
+							],
+							"query": [
+								{
+									"key": "orderId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check-in car in parking = 3 (price = 1 EUR + 0.50 EUR per hour)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5899ac6f-47c8-4699-b323-a24bf2cb2ba8",
+								"exec": [
+									"let response = pm.response.json();",
+									"",
+									"pm.test(\"Check-in successful\", () => {",
+									"    pm.expect(response.orderId).to.be.not.undefined;",
+									"    pm.expect(response.checkin).to.be.not.undefined;",
+									"    pm.expect(response.carPlate).to.be.not.undefined;",
+									"    pm.expect(response.parkingId).to.be.not.undefined;",
+									"    pm.expect(response.slotNumber).to.be.not.undefined;",
+									"});",
+									"",
+									"pm.test(\"No error returned\", () => {",
+									"    pm.expect(response.error).to.be.undefined;",
+									"});",
+									"",
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.response.to.have.status(201);",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"postman.setGlobalVariable('orderId', response.orderId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"carPlate\": \"KL06785\",\r\n    \"serviceRequested\": \"20KwPowerSupply\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/parkings/3/order",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"parkings",
+								"3",
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check-out car from parking = 1 (price per hour = 3.5 EUR) Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5899ac6f-47c8-4699-b323-a24bf2cb2ba8",
+								"exec": [
+									"let response = pm.response.json();",
+									"",
+									"pm.test(\"Checkout successful\", () => {",
+									"    let orderDetails = response.orderDetails;",
+									"    ",
+									"    pm.expect(orderDetails).to.be.not.undefined;",
+									"    pm.expect(orderDetails.checkin).to.be.not.undefined;",
+									"    pm.expect(orderDetails.carPlate).to.be.not.undefined;",
+									"    pm.expect(orderDetails.parkingId).to.be.not.undefined;",
+									"    pm.expect(orderDetails.slotNumber).to.be.not.undefined;",
+									"    ",
+									"    pm.expect(response.amountToPay).to.be.not.undefined;",
+									"    pm.expect(response.amountToPay.amount).to.be.not.undefined;",
+									"    pm.expect(response.amountToPay.currency).to.be.not.undefined;",
+									"});",
+									"",
+									"pm.test(\"No error returned\", () => {",
+									"    pm.expect(response.error).to.be.undefined;",
+									"});",
+									"",
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.response.to.have.status(201);",
+									"    pm.response.to.be.json;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/parkings/checkout?orderId={{orderId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"parkings",
+								"checkout"
+							],
+							"query": [
+								{
+									"key": "orderId",
+									"value": "{{orderId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[Error case] Check-out car : order already checked-out",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5899ac6f-47c8-4699-b323-a24bf2cb2ba8",
+								"exec": [
+									"let response = pm.response.json();",
+									"",
+									"pm.test(\"Error returned\", () => {",
+									"    pm.expect(response.error).to.be.not.undefined;",
+									"    pm.expect(response.message).to.be.equals(\"This order has already been checked-out.\");",
+									"});",
+									"",
+									"pm.test(\"Bad Request (400) status returned\", function () {",
+									"    pm.response.to.have.status(400);",
+									"    pm.response.to.be.json;",
+									"    pm.expect(response.status).to.be.equal(400);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/parkings/checkout?orderId=1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"parkings",
+								"checkout"
+							],
+							"query": [
+								{
+									"key": "orderId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "11fe322f-bcfc-40b6-9b43-6a56e5bda10b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "beee41fa-bdc1-4a79-ab4c-fe556da7d976",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
