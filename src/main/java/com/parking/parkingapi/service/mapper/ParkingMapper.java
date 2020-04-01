@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Objects;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * Mapper for Parking DTO - Entity conversion and vice - versa.
@@ -51,12 +54,16 @@ public class ParkingMapper {
   public Parking mapToDto(
       @NotNull ParkingEntity parkingEntity, @NotNull List<ParkingSlotEntity> slotEntities, @NotNull List<ParkingLogEntity> logEntities) {
 
+    List<ParkingSlotEntity> correspondingSlotEntities = slotEntities.stream()
+        .filter(s -> Objects.equals(parkingEntity, s.getParkingEntity()))
+        .collect(toList());
+
     return ParkingBuilder.builder()
         .withId(parkingEntity.getId())
         .withName(parkingEntity.getName())
         .withAddress(parkingEntity.getAddress())
         .withCity(parkingEntity.getCity())
-        .withParkingSlots(parkingSlotMapper.mapSlotEntitiesToDto(slotEntities, logEntities))
+        .withParkingSlots(parkingSlotMapper.mapSlotEntitiesToDto(correspondingSlotEntities, logEntities))
         .build();
   }
 }

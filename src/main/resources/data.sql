@@ -17,7 +17,11 @@ INSERT INTO parkings (parking_name, address, city, pricing_policy) VALUES
 INSERT INTO vehicles (plate, vehicle_engine_type) VALUES
     ('AA123AA', 'gasoline'),
     ('AB321BA', '20kw'),
-    ('YY897ZZ', '50kw');
+    ('YY897ZZ', '50kw'),
+    ('NO897ZZ', 'gasoline'),
+    ('06897ZZ', 'gasoline'),
+    ('KL009IY', '20kw'),
+    ('TP89653', '20kw');
 
 INSERT INTO parking_slots (slot_number, vehicle_allowed, parking_id) VALUES
     (2, 'gasoline', 1),
@@ -46,6 +50,10 @@ INSERT INTO parking_slots (slot_number, vehicle_allowed, parking_id) VALUES
     (9, '50kw', 3);
 
 INSERT INTO parking_logs (timestamp_in, vehicle_plate, slot_id) VALUES
-    ('2020-03-31 10:23:54+02', 'AA123AA', 1),
-    ('2020-03-30 10:23:54+02', 'AB321BA', 5),
-    ('2020-04-01 08:23:54+02', 'YY897ZZ', 6);
+    ('2020-03-31 10:23:15+02', 'AA123AA', 1),
+    ('2020-03-30 10:23:45+02', 'AB321BA', 5),
+    ('2020-04-01 08:23:23+02', 'YY897ZZ', 6),
+    ('2020-04-01 10:25:54+02', 'NO897ZZ', 7),
+    ('2020-04-01 09:45:47+02', '06897ZZ', 8),
+    ('2020-04-01 07:23:54+02', 'KL009IY', 12),
+    ('2020-04-01 14:23:57+02', 'TP89653', 21);

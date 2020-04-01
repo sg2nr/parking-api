@@ -1,4 +1,4 @@
-package com.parking.parkingapi.dto.pricing;
+package com.parking.parkingapi.model.pricing;
 
 import com.parking.parkingapi.exception.TemporaryDataInconsistencyException;
 import com.parking.parkingapi.model.pricing.Currency;
