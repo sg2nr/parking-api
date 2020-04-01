@@ -64,7 +64,7 @@ To execute:
 ### Maven wrapper
 Alternatively, you can execute the Maven wrapper provided:
 `./mvnw clean install`
-To launch, run:
+To start the application, simply run:
 `./mvnw spring-boot:run`
 
 ### JAR
@@ -72,19 +72,27 @@ In case you want to build the JAR, you can run:
 `mvn clean package` or `./mvnw clean package`.
 Then: `java -jar target/parking-api-0.0.1-SNAPSHOT.jar`
 
+### URL
+The API is reachable at `localhost:8080`.
+
+### Database
+In order to visualize the database, you can use the graphic consolle by typing the following URL on your web browser:
+`http://localhost:8080/h2-console/`
+
+No password is needed.
+
 ## API description
 
-Here you can find an overview of the funcionalities provided by parking-api.
+Here you can find an overview of the operations provided by **parking-api**.
 
 ### Retrieve all parkings
 #### Request
 ````
 GET /parkings
 ````
-GET /parkings
 #### Response
+`200 OK`
 ````
-200 OK
 [
     {
         "id": 1,
@@ -97,11 +105,11 @@ GET /parkings
                 "freeSlots": 3
             },
             "statusPerType": {
-                "50KwPowerSupply": {
+                "20KwPowerSupply": {
                     "totalSlots": 1,
                     "freeSlots": 0
                 },
-                "20KwPowerSupply": {
+                "50KwPowerSupply": {
                     "totalSlots": 1,
                     "freeSlots": 0
                 },
@@ -112,6 +120,7 @@ GET /parkings
             }
         },
         "pricingPolicy": {
+            "id": 2,
             "pricePerHour": 350,
             "policyCurrency": {
                 "currencyCode": "EUR",
@@ -130,13 +139,13 @@ GET /parkings
                 "freeSlots": 6
             },
             "statusPerType": {
-                "50KwPowerSupply": {
-                    "totalSlots": 2,
-                    "freeSlots": 2
-                },
                 "20KwPowerSupply": {
                     "totalSlots": 2,
                     "freeSlots": 1
+                },
+                "50KwPowerSupply": {
+                    "totalSlots": 2,
+                    "freeSlots": 2
                 },
                 "StandardParking": {
                     "totalSlots": 5,
@@ -145,6 +154,7 @@ GET /parkings
             }
         },
         "pricingPolicy": {
+            "id": 1,
             "pricePerHour": 50,
             "policyCurrency": {
                 "currencyCode": "EUR",
@@ -163,13 +173,13 @@ GET /parkings
                 "freeSlots": 8
             },
             "statusPerType": {
-                "50KwPowerSupply": {
-                    "totalSlots": 2,
-                    "freeSlots": 2
-                },
                 "20KwPowerSupply": {
                     "totalSlots": 2,
                     "freeSlots": 1
+                },
+                "50KwPowerSupply": {
+                    "totalSlots": 2,
+                    "freeSlots": 2
                 },
                 "StandardParking": {
                     "totalSlots": 5,
@@ -185,6 +195,7 @@ GET /parkings
                     "decimalPlaces": 2
                 }
             },
+            "id": 3,
             "fixedPrice": 100,
             "policyCurrency": {
                 "currencyCode": "EUR",
@@ -199,8 +210,8 @@ GET /parkings
 `GET /parkings/{parkinId}`
 
 #### Response
+`200 OK`
 ````
-200 OK
 {
     "id": 1,
     "name": "Parking de la Promenade",
@@ -212,11 +223,11 @@ GET /parkings
             "freeSlots": 3
         },
         "statusPerType": {
-            "50KwPowerSupply": {
+            "20KwPowerSupply": {
                 "totalSlots": 1,
                 "freeSlots": 0
             },
-            "20KwPowerSupply": {
+            "50KwPowerSupply": {
                 "totalSlots": 1,
                 "freeSlots": 0
             },
@@ -227,6 +238,7 @@ GET /parkings
         }
     },
     "pricingPolicy": {
+        "id": 2,
         "pricePerHour": 350,
         "policyCurrency": {
             "currencyCode": "EUR",
@@ -241,11 +253,11 @@ GET /parkings
 * `name`: String, mandatory;
 * `address`: String, mandatory;
 * `city`: String, mandatory;
-* `requestedSlots` (mandatory): for each slot types specify the number of the slots to be allocated.
- Possible values of slot types are "50KwPowerSupply", "StandardParking" and "20KwPowerSupply".
+* `requestedSlots` (mandatory): for each slot types specify the number of the slots to be allocated. Possible values of slot types are "50KwPowerSupply", "StandardParking" and "20KwPowerSupply".
+* `pricingPolicyId`: Number, mandatory. It represents the id of the pricing policy applied.
 
+`POST /parkings/`
 ````
-POST /parkings/
 {
     "name": "Parking de Sophia",
     "address": "Sophia Antipolis",
@@ -254,36 +266,194 @@ POST /parkings/
         "50KwPowerSupply": 5,
         "StandardParking": 50,
         "20KwPowerSupply": 2
-    }
+    },
+    "pricingPolicyId": 1
 }
 ````
 #### Response
+`201 Created`
 ````
-201 Created
 {
-        "id": 4,
-        "name": "Parking de Sophia",
-        "address": "Sophia Antipolis",
-        "city": "Biot",
-        "statistics": {
-            "parkingStatus": {
-                "totalSlots": 57,
-                "freeSlots": 57
+    "id": 4,
+    "name": "Parking de Sophia",
+    "address": "Sophia Antipolis",
+    "city": "Biot",
+    "statistics": {
+        "parkingStatus": {
+            "totalSlots": 57,
+            "freeSlots": 57
+        },
+        "statusPerType": {
+            "20KwPowerSupply": {
+                "totalSlots": 2,
+                "freeSlots": 2
             },
-            "statusPerType": {
-                "20KwPowerSupply": {
-                    "totalSlots": 2,
-                    "freeSlots": 2
-                },
-                "StandardParking": {
-                    "totalSlots": 50,
-                    "freeSlots": 50
-                },
-                "50KwPowerSupply": {
-                    "totalSlots": 5,
-                    "freeSlots": 5
-                }
+            "50KwPowerSupply": {
+                "totalSlots": 5,
+                "freeSlots": 5
+            },
+            "StandardParking": {
+                "totalSlots": 50,
+                "freeSlots": 50
             }
         }
+    },
+    "pricingPolicy": {
+        "id": 1,
+        "pricePerHour": 50,
+        "policyCurrency": {
+            "currencyCode": "EUR",
+            "decimalPlaces": 2
+        }
     }
+}
+````
+
+### Delete parking
+#### Request
+`DELETE /parkings/{parkingId}`
+
+#### Response
+`204 No Content`
+
+### Retrieve all the pricing policies
+#### Request
+`GET /pricing-policies`
+
+#### Response
+`200 OK`
+````
+[
+    {
+        "id": 1,
+        "pricePerHour": 50,
+        "policyCurrency": {
+            "currencyCode": "EUR",
+            "decimalPlaces": 2
+        }
+    },
+    {
+        "id": 2,
+        "pricePerHour": 350,
+        "policyCurrency": {
+            "currencyCode": "EUR",
+            "decimalPlaces": 2
+        }
+    },
+    {
+        "basePolicy": {
+            "pricePerHour": 50,
+            "policyCurrency": {
+                "currencyCode": "EUR",
+                "decimalPlaces": 2
+            }
+        },
+        "id": 3,
+        "fixedPrice": 100,
+        "policyCurrency": {
+            "currencyCode": "EUR",
+            "decimalPlaces": 2
+        }
+    }
+]
+ ````
+
+### Retrieve a pricing policy
+#### Request
+`GET /pricing-policies/{pricingPolicyId}`
+
+#### Response
+`200 OK`
+````
+{
+    "pricePerHour": 50,
+    "id": 1,
+    "policyCurrency": {
+        "currencyCode": "EUR",
+        "decimalPlaces": 2
+    }
+}
+````
+
+### Check-in car in parking
+#### Request
+`POST /parkings/{parkingId}/order`
+````json
+{
+    "carPlate": "ZZ98709",
+    "serviceRequested": "StandardParking"
+}
+````
+#### Response
+`201 Created`
+````json
+{
+    "orderId": 8,
+    "checkin": "2020-04-01T15:52:26.224+02:00",
+    "carPlate": "ZZ98709",
+    "parkingId": 1,
+    "slotNumber": 3
+}
+````
+#### Error examples
+##### No parking slot available for the requested car type
+`400 Bad Request`
+````json
+{
+    "timestamp": "2020-04-01T13:20:21.919+0000",
+    "status": 400,
+    "error": "Bad Request",
+    "message": "No slot available.",
+    "path": "/parkings/1/order"
+}
+````
+##### Check-in of a car already parked
+`400 Bad Request`
+````json
+{
+    "timestamp": "2020-04-01T13:20:24.515+0000",
+    "status": 400,
+    "error": "Bad Request",
+    "message": "Vehicle is currently parked.",
+    "path": "/parkings/1/order"
+}
+````
+
+### Check-out car
+#### Request
+`POST /parkings/checkout?orderId={orderId}`
+
+#### Response
+`201 Created`
+````json
+{
+    "orderDetails": {
+        "orderId": 1,
+        "checkin": "2020-03-31T10:23:15+02:00",
+        "carPlate": "AA123AA",
+        "parkingId": 1,
+        "slotNumber": 2
+    },
+    "checkout": "2020-04-01T21:57:43.28+02:00",
+    "amountToPay": {
+        "amount": 12250,
+        "currency": {
+            "currencyCode": "EUR",
+            "decimalPlaces": 2
+        }
+    }
+}
+````
+
+#### Error example
+##### Check-out of the same order twice
+`400 Bad Request`
+````json
+{
+    "timestamp": "2020-04-01T13:20:44.632+0000",
+    "status": 400,
+    "error": "Bad Request",
+    "message": "This order has already been checked-out.",
+    "path": "/parkings/checkout"
+}
 ````
