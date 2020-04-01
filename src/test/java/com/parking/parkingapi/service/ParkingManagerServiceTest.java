@@ -4,6 +4,7 @@ import com.parking.parkingapi.TestUtils;
 import com.parking.parkingapi.dao.ParkingDao;
 import com.parking.parkingapi.dao.ParkingLogsDao;
 import com.parking.parkingapi.dao.ParkingSlotDao;
+import com.parking.parkingapi.dao.PricingPolicyDao;
 import com.parking.parkingapi.exception.EntityNotFoundException;
 import com.parking.parkingapi.model.entities.ParkingEntity;
 import com.parking.parkingapi.model.entities.ParkingSlotEntity;
@@ -43,11 +44,14 @@ class ParkingManagerServiceTest {
 
   ParkingLogsDao parkingLogsDao;
 
+  PricingPolicyDao pricingPolicyDao;
+
   @BeforeAll
   public void setup() {
     parkingDao = Mockito.mock(ParkingDao.class);
     parkingSlotDao = Mockito.mock(ParkingSlotDao.class);
     parkingLogsDao = Mockito.mock(ParkingLogsDao.class);
+    pricingPolicyDao = Mockito.mock(PricingPolicyDao.class);
 
     ParkingServiceTypeConverter parkingServiceTypeConverter = new ParkingServiceTypeConverter();
     VehicleMapper vehicleMapper = new VehicleMapper(parkingServiceTypeConverter);
@@ -55,7 +59,7 @@ class ParkingManagerServiceTest {
     ParkingMapper mapper = new ParkingMapper(slotMapper);
 
     parkingBusinessService = new ParkingManagerService(parkingDao, parkingSlotDao, parkingLogsDao,
-        mapper, slotMapper);
+        mapper, slotMapper, pricingPolicyDao);
   }
 
   @Test

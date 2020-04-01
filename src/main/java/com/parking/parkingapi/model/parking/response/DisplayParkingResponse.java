@@ -1,5 +1,7 @@
 package com.parking.parkingapi.model.parking.response;
 
+import com.parking.parkingapi.model.pricing.PricingPolicy;
+
 /**
  * Response with Parking information for display operations
  */
@@ -56,5 +58,15 @@ public class DisplayParkingResponse {
 
   public void setStatistics(ParkingStatistics statistics) {
     this.statistics = statistics;
+  }
+
+  private PricingPolicy pricingPolicy;
+
+  public PricingPolicy getPricingPolicy() {
+    return pricingPolicy;
+  }
+
+  public void setPricingPolicy(PricingPolicy pricingPolicy) {
+    this.pricingPolicy = pricingPolicy;
   }
 }

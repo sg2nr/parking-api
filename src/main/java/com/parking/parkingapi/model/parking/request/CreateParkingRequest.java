@@ -17,6 +17,8 @@ public class CreateParkingRequest {
 
   private Map<ParkingServiceType, Integer> requestedSlots;
 
+  private Long pricingPolicyId;
+
   public CreateParkingRequest() {
   }
 
@@ -50,5 +52,13 @@ public class CreateParkingRequest {
 
   public void setRequestedSlots(Map<ParkingServiceType, Integer> requestedSlots) {
     this.requestedSlots = requestedSlots;
+  }
+
+  public Long getPricingPolicyId() {
+    return pricingPolicyId;
+  }
+
+  public void setPricingPolicyId(Long pricingPolicyId) {
+    this.pricingPolicyId = pricingPolicyId;
   }
 }

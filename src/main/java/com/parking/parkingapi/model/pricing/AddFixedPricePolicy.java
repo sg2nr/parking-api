@@ -9,18 +9,18 @@ import java.util.function.BiFunction;
  */
 public class AddFixedPricePolicy extends CompositePricingPolicy {
 
-  private long fixedPrice;
+  private int fixedPrice;
 
-  public AddFixedPricePolicy(PricingPolicy basePolicy, long fixedPrice, Currency currency) {
-    super(basePolicy, currency);
+  public AddFixedPricePolicy(PricingPolicy basePolicy, Currency currency, Long id,  int fixedPrice) {
+    super(basePolicy, currency, id);
     this.fixedPrice = fixedPrice;
   }
 
-  public long getFixedPrice() {
+  public int getFixedPrice() {
     return fixedPrice;
   }
 
-  public void setFixedPrice(long fixedPrice) {
+  public void setFixedPrice(int fixedPrice) {
     this.fixedPrice = fixedPrice;
   }
 

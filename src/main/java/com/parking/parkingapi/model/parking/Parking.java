@@ -21,6 +21,8 @@ public class Parking implements ParkingApiDto {
 
   private List<ParkingSlot> parkingSlots;
 
+  private Long pricingPolicyRequestId;
+
   private PricingPolicy pricingPolicy;
 
   public Parking() {
@@ -72,5 +74,13 @@ public class Parking implements ParkingApiDto {
 
   public void setPricingPolicy(PricingPolicy pricingPolicy) {
     this.pricingPolicy = pricingPolicy;
+  }
+
+  public Long getPricingPolicyRequestId() {
+    return pricingPolicyRequestId;
+  }
+
+  public void setPricingPolicyRequestId(Long pricingPolicyRequestId) {
+    this.pricingPolicyRequestId = pricingPolicyRequestId;
   }
 }

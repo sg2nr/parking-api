@@ -1,13 +1,14 @@
 package com.parking.parkingapi.model.pricing;
 
 import com.parking.parkingapi.exception.TemporaryDataInconsistencyException;
+import com.parking.parkingapi.model.common.ParkingApiDto;
 
 import java.time.ZonedDateTime;
 
 /**
  * Abstraction of a Pricing Policy that prices in function of the time spent in the parking.
  */
-public interface PricingPolicy {
+public interface PricingPolicy extends ParkingApiDto {
 
   /**
    * It computes the amount to pay based on the conditions of the pricing policy.
@@ -29,4 +30,11 @@ public interface PricingPolicy {
    * @return
    */
   Currency getPolicyCurrency();
+
+  /**
+   * The identifier of the pricing policy
+   *
+   * @return
+   */
+  Long getId();
 }

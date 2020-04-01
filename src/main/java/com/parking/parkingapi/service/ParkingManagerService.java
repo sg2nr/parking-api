@@ -3,6 +3,7 @@ package com.parking.parkingapi.service;
 import com.parking.parkingapi.dao.ParkingDao;
 import com.parking.parkingapi.dao.ParkingLogsDao;
 import com.parking.parkingapi.dao.ParkingSlotDao;
+import com.parking.parkingapi.dao.PricingPolicyDao;
 import com.parking.parkingapi.exception.EntityCreationViolation;
 import com.parking.parkingapi.exception.EntityNotFoundException;
 import com.parking.parkingapi.model.entities.ParkingEntity;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Component;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
@@ -46,15 +48,18 @@ public class ParkingManagerService implements ManagerService<Parking, Long> {
 
   private final ParkingSlotMapper slotMapper;
 
+  private final PricingPolicyDao pricingPolicyDao;
+
   @Autowired
   public ParkingManagerService(
       ParkingDao parkingDao, ParkingSlotDao parkingSlotDao, ParkingLogsDao parkingLogsDao,
-      ParkingMapper mapper, ParkingSlotMapper slotMapper) {
+      ParkingMapper mapper, ParkingSlotMapper slotMapper, PricingPolicyDao pricingPolicyDao) {
     this.parkingDao = parkingDao;
     this.parkingSlotDao = parkingSlotDao;
     this.parkingLogsDao = parkingLogsDao;
     this.mapper = mapper;
     this.slotMapper = slotMapper;
+    this.pricingPolicyDao = pricingPolicyDao;
   }
 
   public Parking find(Long id) throws EntityNotFoundException {
@@ -66,6 +71,11 @@ public class ParkingManagerService implements ManagerService<Parking, Long> {
 
   public Parking create(@NotNull Parking createParkingRequest) throws EntityCreationViolation {
     ParkingEntity parkingEntity = mapper.mapToEntity(createParkingRequest);
+
+    if (Objects.nonNull(createParkingRequest.getPricingPolicyRequestId())) {
+      long pricingPolicyId = createParkingRequest.getPricingPolicyRequestId();
+      pricingPolicyDao.findById(pricingPolicyId).ifPresent(parkingEntity::setPricingPolicyEntity);
+    }
 
     try {
       ParkingEntity createdEntity = parkingDao.save(parkingEntity);

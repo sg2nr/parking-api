@@ -17,6 +17,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -32,6 +33,13 @@ import static java.util.stream.Collectors.toMap;
 @Component
 public class ParkingJsonMapper {
 
+  private static final String PARKING_GENERAL_INFORMATION_MANDATORY =
+      "Parking general information, such as 'name', 'address' and 'city', are mandatory";
+
+  private static final String ELEMENT_REQUESTED_SLOTS_IS_MANDATORY = "Element 'requestedSlots' is mandatory";
+
+  private static final String ELEMENT_PRICING_POLICY_ID_IS_MANDATORY = "Element 'pricingPolicyId' is mandatory";
+
   public DisplayParkingResponse mapToResponse(@NotNull Parking parking) {
 
     return DisplayParkingResponseBuilder.builder()
@@ -40,15 +48,24 @@ public class ParkingJsonMapper {
         .withAddress(parking.getAddress())
         .withCity(parking.getCity())
         .withStatistics(mapParkingStatistics(parking.getParkingSlots()))
+        .withPricingPolicy(parking.getPricingPolicy())
         .build();
   }
 
   public Parking mapToDto(@NotNull CreateParkingRequest request) throws InvalidInputDataException {
 
-    // Requested slots are mandatory
+    // Perform input validation
+    if (Objects.isNull(request.getName()) || Objects.isNull(request.getAddress()) || Objects.isNull(request.getCity())) {
+      throw new InvalidInputDataException(PARKING_GENERAL_INFORMATION_MANDATORY);
+    }
+
     Map<ParkingServiceType, Integer> requestedSlots = request.getRequestedSlots();
     if (CollectionUtils.isEmpty(requestedSlots)) {
-      throw new InvalidInputDataException("Element 'requestedSlots' is mandatory");
+      throw new InvalidInputDataException(ELEMENT_REQUESTED_SLOTS_IS_MANDATORY);
+    }
+
+    if (Objects.isNull(request.getPricingPolicyId())) {
+      throw new InvalidInputDataException(ELEMENT_PRICING_POLICY_ID_IS_MANDATORY);
     }
 
     List<ParkingSlot> parkingSlots = createParkingSlots(requestedSlots);
@@ -58,6 +75,7 @@ public class ParkingJsonMapper {
         .withAddress(request.getAddress())
         .withCity(request.getCity())
         .withParkingSlots(parkingSlots)
+        .withPricingPolicyRequestId(request.getPricingPolicyId())
         .build();
   }
 

@@ -1,5 +1,7 @@
 package com.parking.parkingapi.model.parking.response;
 
+import com.parking.parkingapi.model.pricing.PricingPolicy;
+
 /**
  * Builder for Parking DTO in Response
  */
@@ -15,16 +17,13 @@ public final class DisplayParkingResponseBuilder {
 
   private ParkingStatistics statistics;
 
+  private PricingPolicy pricingPolicy;
+
   private DisplayParkingResponseBuilder() {
   }
 
   public static DisplayParkingResponseBuilder builder() {
     return new DisplayParkingResponseBuilder();
-  }
-
-  public DisplayParkingResponseBuilder withStatistics(ParkingStatistics statistics) {
-    this.statistics = statistics;
-    return this;
   }
 
   public DisplayParkingResponseBuilder withId(long id) {
@@ -47,13 +46,24 @@ public final class DisplayParkingResponseBuilder {
     return this;
   }
 
+  public DisplayParkingResponseBuilder withStatistics(ParkingStatistics statistics) {
+    this.statistics = statistics;
+    return this;
+  }
+
+  public DisplayParkingResponseBuilder withPricingPolicy(PricingPolicy pricingPolicy) {
+    this.pricingPolicy = pricingPolicy;
+    return this;
+  }
+
   public DisplayParkingResponse build() {
     DisplayParkingResponse displayParkingResponse = new DisplayParkingResponse();
-    displayParkingResponse.setStatistics(statistics);
     displayParkingResponse.setId(id);
     displayParkingResponse.setName(name);
     displayParkingResponse.setAddress(address);
     displayParkingResponse.setCity(city);
+    displayParkingResponse.setStatistics(statistics);
+    displayParkingResponse.setPricingPolicy(pricingPolicy);
     return displayParkingResponse;
   }
 }

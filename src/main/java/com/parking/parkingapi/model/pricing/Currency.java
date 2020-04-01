@@ -7,9 +7,9 @@ import java.util.Objects;
  */
 public class Currency {
 
-  private String currencyCode;
+  private final String currencyCode;
 
-  private int decimalPlaces;
+  private final int decimalPlaces;
 
   public String getCurrencyCode() {
     return currencyCode;

@@ -5,9 +5,6 @@ import com.parking.parkingapi.model.pricing.PricingPolicy;
 
 import java.util.List;
 
-/**
- * Builder for {@link Parking} objects.
- */
 public final class ParkingBuilder {
 
   private long id;
@@ -19,6 +16,8 @@ public final class ParkingBuilder {
   private String city;
 
   private List<ParkingSlot> parkingSlots;
+
+  private Long pricingPolicyRequestId;
 
   private PricingPolicy pricingPolicy;
 
@@ -54,6 +53,11 @@ public final class ParkingBuilder {
     return this;
   }
 
+  public ParkingBuilder withPricingPolicyRequestId(Long pricingPolicyRequestId) {
+    this.pricingPolicyRequestId = pricingPolicyRequestId;
+    return this;
+  }
+
   public ParkingBuilder withPricingPolicy(PricingPolicy pricingPolicy) {
     this.pricingPolicy = pricingPolicy;
     return this;
@@ -66,6 +70,7 @@ public final class ParkingBuilder {
     parking.setAddress(address);
     parking.setCity(city);
     parking.setParkingSlots(parkingSlots);
+    parking.setPricingPolicyRequestId(pricingPolicyRequestId);
     parking.setPricingPolicy(pricingPolicy);
     return parking;
   }

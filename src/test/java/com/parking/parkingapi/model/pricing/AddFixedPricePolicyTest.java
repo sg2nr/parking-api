@@ -29,13 +29,15 @@ class AddFixedPricePolicyTest {
 
   private static final int PRICE_PER_HOUR = 100;
 
+  private static final long ID = 1L;
+
   private AddFixedPricePolicy policy;
 
   @BeforeAll
   public void setUp() {
     Currency currency = new Currency(CURRENCY_CODE, DECIMAL_PLACES);
-    PricingPerHourPolicy basePolicy = new PricingPerHourPolicy(PRICE_PER_HOUR, currency);
-    policy = new AddFixedPricePolicy(basePolicy, FIXED_PRICE, currency);
+    PricingPerHourPolicy basePolicy = new PricingPerHourPolicy(PRICE_PER_HOUR, currency, ID);
+    policy = new AddFixedPricePolicy(basePolicy, currency, ID, FIXED_PRICE);
   }
 
   @Test

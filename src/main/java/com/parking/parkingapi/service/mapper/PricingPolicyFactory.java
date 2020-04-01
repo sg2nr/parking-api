@@ -29,15 +29,30 @@ public class PricingPolicyFactory {
       return Optional.empty();
     }
     PricingPolicyEntity pricingPolicyEntity = parkingEntity.getPricingPolicyEntity();
+    return createPricingPolicy(pricingPolicyEntity);
+  }
+
+  /**
+   * It instantiates a PricingPolicy based on information in the input PricingPolicyEntity
+   *
+   * @param pricingPolicyEntity
+   *    The entity to convert
+   * @return
+   *    An Optional contained the PricingPolicy. It can be empty if it was not possible
+   *    to create a PricingPolicy.
+   */
+  public static Optional<PricingPolicy> createPricingPolicy(PricingPolicyEntity pricingPolicyEntity) {
     CurrencyEntity currencyEntity = pricingPolicyEntity.getCurrencyEntity();
     Currency currency = new Currency(currencyEntity.getCode(), currencyEntity.getDecimalPlaces());
 
+    long id = pricingPolicyEntity.getId();
     int unitPrice = pricingPolicyEntity.getUnitPriceUnscaled();
-    PricingPolicy pricePerHourPolicy = new PricingPerHourPolicy(unitPrice, currency);
+    PricingPerHourPolicy pricePerHourPolicy = new PricingPerHourPolicy(unitPrice, currency, id);
 
     if (Objects.nonNull(pricingPolicyEntity.getFixedPriceUnscaled())) {
       int fixedPrice = pricingPolicyEntity.getFixedPriceUnscaled();
-      return Optional.of(new AddFixedPricePolicy(pricePerHourPolicy, fixedPrice, currency));
+      pricePerHourPolicy.setId(null);
+      return Optional.of(new AddFixedPricePolicy(pricePerHourPolicy, currency, id, fixedPrice));
     }
     return Optional.of(pricePerHourPolicy);
   }

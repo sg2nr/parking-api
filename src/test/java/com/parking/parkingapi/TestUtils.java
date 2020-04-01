@@ -46,12 +46,15 @@ public class TestUtils {
 
   public static final int POLICY_FIXED_PRICE = 50;
 
+  public static final long PARKING_POLICY_1 = 1L;
+
   public static Parking getTestParking() {
     Parking parking = new Parking();
     parking.setId(PARKING_ID_1);
     parking.setName(PARKING_NAME_1);
     parking.setAddress(PARKING_ADDRESS_1);
     parking.setCity(PARKING_CITY_1);
+    parking.setPricingPolicyRequestId(PARKING_POLICY_1);
 
     List<ParkingSlot> parkingSlots = new ArrayList<>();
     parkingSlots.addAll(createParkingSlots(ParkingServiceType.STANDARD_PARKING, TOTAL_STANDARD_SLOTS));
@@ -117,7 +120,7 @@ public class TestUtils {
 
   private static PricingPolicy createPricingPolicy() {
     Currency currency = new Currency(CURRENCY_CODE, DECIMAL_PLACES);
-    return new PricingPerHourPolicy(PRICE_PER_HOUR, currency);
+    return new PricingPerHourPolicy(PRICE_PER_HOUR, currency, PARKING_POLICY_1);
   }
 
   public static PricingPolicyEntity getTestPricingPolicyEntity() {

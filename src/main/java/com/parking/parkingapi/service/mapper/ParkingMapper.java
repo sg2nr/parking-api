@@ -46,6 +46,8 @@ public class ParkingMapper {
   }
 
   /**
+   * It creates the Parking Dto from the entities in input.
+   *
    * @param parkingEntity
    * @param slotEntities
    * @param logEntities
@@ -58,12 +60,17 @@ public class ParkingMapper {
         .filter(s -> Objects.equals(parkingEntity, s.getParkingEntity()))
         .collect(toList());
 
-    return ParkingBuilder.builder()
+    Parking parking = ParkingBuilder.builder()
         .withId(parkingEntity.getId())
         .withName(parkingEntity.getName())
         .withAddress(parkingEntity.getAddress())
         .withCity(parkingEntity.getCity())
         .withParkingSlots(parkingSlotMapper.mapSlotEntitiesToDto(correspondingSlotEntities, logEntities))
         .build();
+
+    // Add the pricing policy
+    PricingPolicyFactory.createPricingPolicy(parkingEntity)
+        .ifPresent(parking::setPricingPolicy);
+    return parking;
   }
 }
