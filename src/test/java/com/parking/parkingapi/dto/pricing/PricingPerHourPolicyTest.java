@@ -63,9 +63,8 @@ class PricingPerHourPolicyTest {
     ZonedDateTime in = ZonedDateTime.now();
     ZonedDateTime out = in.minus(10, ChronoUnit.HOURS);
 
-    Exception exception = assertThrows(TemporaryDataInconsistencyException.class, () -> {
-      policy.calculateAmount(in, out);
-    });
+    Exception exception = assertThrows(TemporaryDataInconsistencyException.class,
+        () -> policy.calculateAmount(in, out));
 
     String expectedMessage = "The date time of exit is before the entrance!";
     String actualMessage = exception.getMessage();

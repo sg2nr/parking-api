@@ -1,4 +1,4 @@
-package com.parking.parkingapi.model.car;
+package com.parking.parkingapi.model.vehicle;
 
 import com.parking.parkingapi.model.common.ParkingServiceType;
 

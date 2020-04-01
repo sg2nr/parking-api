@@ -4,6 +4,7 @@ import com.parking.parkingapi.exception.TemporaryDataInconsistencyException;
 
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Objects;
 
 /**
  * PricingPerHourPolicy computes the final amount to pay based on the hours spent in the parking.
@@ -23,7 +24,7 @@ public class PricingPerHourPolicy implements PricingPolicy {
   public Price calculateAmount(ZonedDateTime dateTimeIn, ZonedDateTime dateTimeOut)
       throws TemporaryDataInconsistencyException {
 
-    if (dateTimeOut.isBefore(dateTimeIn)) {
+    if (Objects.isNull(dateTimeIn) || Objects.isNull(dateTimeOut) || dateTimeOut.isBefore(dateTimeIn)) {
       throw new TemporaryDataInconsistencyException("The date time of exit is before the entrance!");
     }
 

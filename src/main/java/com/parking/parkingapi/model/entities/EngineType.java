@@ -10,7 +10,7 @@ public enum EngineType {
   ELECTRICAL_TWENTY_KW("20kw"),
   ELECTRICAL_FIFTY_KW("50kw");
 
-  private String type;
+  private final String type;
 
   EngineType(String type) {
     this.type = type;

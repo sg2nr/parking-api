@@ -1,8 +1,10 @@
-package com.parking.parkingapi.model.car.response;
+package com.parking.parkingapi.model.order.response;
 
 import java.time.ZonedDateTime;
 
 public class OrderResponse {
+
+  private long orderId;
 
   private ZonedDateTime checkin;
 
@@ -13,6 +15,14 @@ public class OrderResponse {
   private long slotNumber;
 
   public OrderResponse() {
+  }
+
+  public long getOrderId() {
+    return orderId;
+  }
+
+  public void setOrderId(long orderId) {
+    this.orderId = orderId;
   }
 
   public ZonedDateTime getCheckin() {

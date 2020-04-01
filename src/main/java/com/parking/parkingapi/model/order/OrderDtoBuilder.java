@@ -1,6 +1,7 @@
-package com.parking.parkingapi.model.car;
+package com.parking.parkingapi.model.order;
 
 import com.parking.parkingapi.model.pricing.Price;
+import com.parking.parkingapi.model.vehicle.Vehicle;
 
 import java.time.ZonedDateTime;
 

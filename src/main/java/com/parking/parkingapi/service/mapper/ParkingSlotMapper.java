@@ -21,9 +21,9 @@ import static java.util.stream.Collectors.toList;
 @Component
 public class ParkingSlotMapper {
 
-  private VehicleMapper vehicleMapper;
+  private final VehicleMapper vehicleMapper;
 
-  private ParkingServiceTypeConverter parkingServiceTypeConverter;
+  private final ParkingServiceTypeConverter parkingServiceTypeConverter;
 
   @Autowired
   public ParkingSlotMapper(VehicleMapper vehicleMapper, ParkingServiceTypeConverter parkingServiceTypeConverter) {

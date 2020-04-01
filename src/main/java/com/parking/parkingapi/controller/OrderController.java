@@ -1,20 +1,27 @@
 package com.parking.parkingapi.controller;
 
 import com.parking.parkingapi.controller.mapper.OrderJsonMapper;
+import com.parking.parkingapi.exception.CheckOutAlreadyPerformedException;
 import com.parking.parkingapi.exception.EntityCreationViolation;
 import com.parking.parkingapi.exception.EntityNotFoundException;
 import com.parking.parkingapi.exception.InvalidInputDataException;
+import com.parking.parkingapi.exception.NoPricingPolicyFound;
 import com.parking.parkingapi.exception.NoSlotAvailableException;
+import com.parking.parkingapi.exception.OrderNotFoundException;
+import com.parking.parkingapi.exception.TemporaryDataInconsistencyException;
 import com.parking.parkingapi.exception.VehicleAlreadyParkedException;
-import com.parking.parkingapi.model.car.OrderDto;
-import com.parking.parkingapi.model.car.request.OrderRequest;
-import com.parking.parkingapi.model.car.response.OrderResponse;
-import com.parking.parkingapi.service.OrderBusinessService;
+import com.parking.parkingapi.model.order.response.CheckOutResponse;
+import com.parking.parkingapi.model.order.OrderDto;
+import com.parking.parkingapi.model.order.request.OrderRequest;
+import com.parking.parkingapi.model.order.response.OrderResponse;
+import com.parking.parkingapi.service.CheckInOrchestrator;
+import com.parking.parkingapi.service.CheckOutOrchestrator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,23 +30,39 @@ import javax.validation.Valid;
 @RestController
 public class OrderController {
 
-  private OrderJsonMapper orderJsonMapper;
+  private final OrderJsonMapper orderJsonMapper;
 
-  private OrderBusinessService orderBusinessService;
+  private final CheckInOrchestrator checkInOrchestrator;
+
+  private final CheckOutOrchestrator checkOutOrchestrator;
 
   @Autowired
-  public OrderController(OrderJsonMapper orderJsonMapper, OrderBusinessService orderBusinessService) {
+  public OrderController(OrderJsonMapper orderJsonMapper, CheckInOrchestrator checkInOrchestrator, CheckOutOrchestrator checkOutOrchestrator) {
     this.orderJsonMapper = orderJsonMapper;
-    this.orderBusinessService = orderBusinessService;
+    this.checkInOrchestrator = checkInOrchestrator;
+    this.checkOutOrchestrator = checkOutOrchestrator;
   }
 
   @PostMapping("parkings/{parkingId}/order")
   @ResponseStatus(HttpStatus.CREATED)
-  public OrderResponse checkInCar(@RequestBody OrderRequest request, @Valid @PathVariable long parkingId)
+  public OrderResponse checkIn(@RequestBody OrderRequest request, @Valid @PathVariable long parkingId)
       throws EntityNotFoundException, EntityCreationViolation, NoSlotAvailableException,
       VehicleAlreadyParkedException, InvalidInputDataException {
 
-    OrderDto order = orderBusinessService.createOrder(orderJsonMapper.mapToDto(request, parkingId));
+    OrderDto order = checkInOrchestrator.run(orderJsonMapper.mapToDto(request, parkingId));
     return orderJsonMapper.mapToResponse(order);
   }
+
+  @PostMapping("parkings/checkout")
+  @ResponseStatus(HttpStatus.CREATED)
+  public CheckOutResponse checkOut(@RequestParam long orderId) throws OrderNotFoundException,
+      TemporaryDataInconsistencyException, NoPricingPolicyFound, CheckOutAlreadyPerformedException {
+
+    OrderDto orderDtoRequest = new OrderDto();
+    orderDtoRequest.setOrderId(orderId);
+
+    OrderDto orderDtoResponse = checkOutOrchestrator.run(orderDtoRequest);
+    return orderJsonMapper.mapToCheckoutResponse(orderDtoResponse);
+  }
+
 }

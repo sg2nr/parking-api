@@ -3,7 +3,7 @@ package com.parking.parkingapi.service;
 import com.parking.parkingapi.dao.VehicleDao;
 import com.parking.parkingapi.exception.EntityCreationViolation;
 import com.parking.parkingapi.exception.EntityNotFoundException;
-import com.parking.parkingapi.model.car.Vehicle;
+import com.parking.parkingapi.model.vehicle.Vehicle;
 import com.parking.parkingapi.model.entities.VehicleEntity;
 import com.parking.parkingapi.service.mapper.VehicleMapper;
 import org.slf4j.Logger;
@@ -23,9 +23,9 @@ public class VehicleManagerService implements ManagerService<Vehicle, String> {
 
   private static final String CREATION_VEHICLE_ERROR_MESSAGE = "Impossible to create the requested vehicle";
 
-  private VehicleDao vehicleDao;
+  private final VehicleDao vehicleDao;
 
-  private VehicleMapper vehicleMapper;
+  private final VehicleMapper vehicleMapper;
 
   @Autowired
   public VehicleManagerService(VehicleDao vehicleDao, VehicleMapper vehicleMapper) {

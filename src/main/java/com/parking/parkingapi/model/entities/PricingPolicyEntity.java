@@ -46,7 +46,7 @@ public class PricingPolicyEntity {
     this.id = id;
   }
 
-  public int getUnitPriceUnscaled() {
+  public Integer getUnitPriceUnscaled() {
     return unitPriceUnscaled;
   }
 
@@ -54,7 +54,7 @@ public class PricingPolicyEntity {
     this.unitPriceUnscaled = unitPriceUnscaled;
   }
 
-  public int getFixedPriceUnscaled() {
+  public Integer getFixedPriceUnscaled() {
     return fixedPriceUnscaled;
   }
 

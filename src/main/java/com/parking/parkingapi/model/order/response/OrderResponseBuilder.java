@@ -1,8 +1,10 @@
-package com.parking.parkingapi.model.car.response;
+package com.parking.parkingapi.model.order.response;
 
 import java.time.ZonedDateTime;
 
 public final class OrderResponseBuilder {
+
+  private long orderId;
 
   private ZonedDateTime checkin;
 
@@ -17,6 +19,11 @@ public final class OrderResponseBuilder {
 
   public static OrderResponseBuilder builder() {
     return new OrderResponseBuilder();
+  }
+
+  public OrderResponseBuilder withOrderId(long orderId) {
+    this.orderId = orderId;
+    return this;
   }
 
   public OrderResponseBuilder withCheckin(ZonedDateTime checkin) {
@@ -41,6 +48,7 @@ public final class OrderResponseBuilder {
 
   public OrderResponse build() {
     OrderResponse orderResponse = new OrderResponse();
+    orderResponse.setOrderId(orderId);
     orderResponse.setCheckin(checkin);
     orderResponse.setCarPlate(carPlate);
     orderResponse.setParkingId(parkingId);

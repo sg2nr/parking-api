@@ -17,7 +17,7 @@ import java.util.List;
 @Component
 public class ParkingMapper {
 
-  ParkingSlotMapper parkingSlotMapper;
+  final ParkingSlotMapper parkingSlotMapper;
 
   @Autowired
   public ParkingMapper(ParkingSlotMapper parkingSlotMapper) {

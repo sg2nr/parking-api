@@ -36,15 +36,15 @@ public class ParkingManagerService implements ManagerService<Parking, Long> {
 
   private static final String CREATION_PARKING_ERROR_MESSAGE = "Impossible to create the requested parking.";
 
-  ParkingDao parkingDao;
+  private final ParkingDao parkingDao;
 
-  ParkingSlotDao parkingSlotDao;
+  private final ParkingSlotDao parkingSlotDao;
 
-  ParkingLogsDao parkingLogsDao;
+  private final ParkingLogsDao parkingLogsDao;
 
-  ParkingMapper mapper;
+  private final ParkingMapper mapper;
 
-  ParkingSlotMapper slotMapper;
+  private final ParkingSlotMapper slotMapper;
 
   @Autowired
   public ParkingManagerService(

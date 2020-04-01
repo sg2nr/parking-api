@@ -1,6 +1,6 @@
 package com.parking.parkingapi.model.parking;
 
-import com.parking.parkingapi.dto.ParkingApiDto;
+import com.parking.parkingapi.model.common.ParkingApiDto;
 import com.parking.parkingapi.model.parkingslot.ParkingSlot;
 import com.parking.parkingapi.model.pricing.PricingPolicy;
 

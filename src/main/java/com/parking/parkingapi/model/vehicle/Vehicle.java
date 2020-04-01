@@ -1,6 +1,6 @@
-package com.parking.parkingapi.model.car;
+package com.parking.parkingapi.model.vehicle;
 
-import com.parking.parkingapi.dto.ParkingApiDto;
+import com.parking.parkingapi.model.common.ParkingApiDto;
 import com.parking.parkingapi.model.common.ParkingServiceType;
 
 /**

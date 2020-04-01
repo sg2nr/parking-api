@@ -11,8 +11,8 @@ INSERT INTO pricing_policies (unit_price, fixed_price, currency) VALUES
 
 INSERT INTO parkings (parking_name, address, city, pricing_policy) VALUES
     ('Parking de la Promenade', 'Promenade des Anglais', 'Nice', 2),
-    ('Parking des Pecheurs', 'Esplanade des Pecheurs', 'Antibes', 3),
-    ('Parking Monte Carlo', 'Place du Casino', 'Monaco', 1);
+    ('Parking des Pecheurs', 'Esplanade des Pecheurs', 'Antibes', 1),
+    ('Parking Monte Carlo', 'Place du Casino', 'Monaco', 3);
 
 INSERT INTO vehicles (plate, vehicle_engine_type) VALUES
     ('AA123AA', 'gasoline'),

@@ -42,6 +42,10 @@ public class TestUtils {
 
   private static final int PRICE_PER_HOUR = 100;
 
+  public static final int POLICY_UNIT_PRICE = 100;
+
+  public static final int POLICY_FIXED_PRICE = 50;
+
   public static Parking getTestParking() {
     Parking parking = new Parking();
     parking.setId(PARKING_ID_1);
@@ -78,7 +82,7 @@ public class TestUtils {
     parkingEntity.setName(PARKING_NAME_1);
     parkingEntity.setAddress(PARKING_ADDRESS_1);
     parkingEntity.setCity(PARKING_CITY_1);
-    parkingEntity.setPricingPolicyEntity(createPricingPolicyEntity());
+    parkingEntity.setPricingPolicyEntity(getTestPricingPolicyEntity());
 
     return parkingEntity;
   }
@@ -116,10 +120,20 @@ public class TestUtils {
     return new PricingPerHourPolicy(PRICE_PER_HOUR, currency);
   }
 
-  private static PricingPolicyEntity createPricingPolicyEntity() {
+  public static PricingPolicyEntity getTestPricingPolicyEntity() {
     PricingPolicyEntity pricingPolicyEntity = new PricingPolicyEntity();
     pricingPolicyEntity.setId(1);
-    pricingPolicyEntity.setUnitPriceUnscaled(100);
+    pricingPolicyEntity.setUnitPriceUnscaled(POLICY_UNIT_PRICE);
+    pricingPolicyEntity.setCurrencyEntity(createCurrencyEntity());
+
+    return pricingPolicyEntity;
+  }
+
+  public static PricingPolicyEntity getTestFixedPricePricingPolicyEntity() {
+    PricingPolicyEntity pricingPolicyEntity = new PricingPolicyEntity();
+    pricingPolicyEntity.setId(1);
+    pricingPolicyEntity.setUnitPriceUnscaled(POLICY_UNIT_PRICE);
+    pricingPolicyEntity.setFixedPriceUnscaled(POLICY_FIXED_PRICE);
     pricingPolicyEntity.setCurrencyEntity(createCurrencyEntity());
 
     return pricingPolicyEntity;

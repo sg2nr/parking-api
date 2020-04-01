@@ -82,9 +82,8 @@ class ParkingManagerServiceTest {
     Mockito.when(parkingSlotDao.findByParkingEntity(any())).thenReturn(new ArrayList<>());
     Mockito.when(parkingLogsDao.findAll()).thenReturn(new ArrayList<>());
 
-    Exception exception = assertThrows(EntityNotFoundException.class, () -> {
-      parkingBusinessService.find(TestUtils.PARKING_ID_1);
-    });
+    Exception exception = assertThrows(EntityNotFoundException.class,
+        () -> parkingBusinessService.find(TestUtils.PARKING_ID_1));
 
     String expectedMessage = "Impossible to retrieve parking with id: 1.";
     String actualMessage = exception.getMessage();
@@ -96,9 +95,8 @@ class ParkingManagerServiceTest {
   public void testDeleteParkingNotExists() {
     Mockito.when(parkingDao.findById(anyLong())).thenReturn(Optional.empty());
 
-    Exception exception = assertThrows(EntityNotFoundException.class, () -> {
-      parkingBusinessService.delete(TestUtils.PARKING_ID_1);
-    });
+    Exception exception = assertThrows(EntityNotFoundException.class,
+        () -> parkingBusinessService.delete(TestUtils.PARKING_ID_1));
 
     String expectedMessage = "Impossible to retrieve parking with id: 1.";
     String actualMessage = exception.getMessage();

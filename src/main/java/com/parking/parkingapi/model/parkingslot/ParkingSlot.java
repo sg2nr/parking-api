@@ -1,7 +1,7 @@
 package com.parking.parkingapi.model.parkingslot;
 
-import com.parking.parkingapi.dto.ParkingApiDto;
-import com.parking.parkingapi.model.car.Vehicle;
+import com.parking.parkingapi.model.common.ParkingApiDto;
+import com.parking.parkingapi.model.vehicle.Vehicle;
 import com.parking.parkingapi.model.common.ParkingServiceType;
 
 import java.util.Objects;
@@ -58,12 +58,6 @@ public class ParkingSlot implements ParkingApiDto {
     return vehicle == null;
   }
 
-  /**
-   * The vehicle in input is parked in the slot.
-   *
-   * @param vehicle
-   * @return
-   */
   /**
    * The vehicle in input is parked in the slot, if eligible.
    *

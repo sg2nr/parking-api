@@ -1,6 +1,6 @@
 package com.parking.parkingapi.service;
 
-import com.parking.parkingapi.dto.ParkingApiDto;
+import com.parking.parkingapi.model.common.ParkingApiDto;
 import com.parking.parkingapi.exception.EntityNotFoundException;
 import com.parking.parkingapi.exception.EntityCreationViolation;
 

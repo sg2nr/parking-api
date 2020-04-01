@@ -22,7 +22,7 @@ public class ParkingLogEntity {
   @Column(name = "timestamp_in", nullable = false)
   private ZonedDateTime timeStampIn;
 
-  @Column(name = "timestamp_out", nullable = true)
+  @Column(name = "timestamp_out")
   private ZonedDateTime timeStampOut;
 
   @ManyToOne

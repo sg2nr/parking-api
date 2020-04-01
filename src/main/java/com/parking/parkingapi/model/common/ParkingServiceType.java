@@ -12,7 +12,7 @@ public enum ParkingServiceType {
   TWENTY_KW_POWER_SUPPLY("20KwPowerSupply"),
   FIFTY_KW_POWER_SUPPLY("50KwPowerSupply");
 
-  private String description;
+  private final String description;
 
   ParkingServiceType(String description) {
     this.description = description;

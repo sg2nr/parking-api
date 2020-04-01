@@ -1,7 +1,5 @@
 package com.parking.parkingapi.model.parking.response;
 
-import com.parking.parkingapi.model.parking.Parking;
-
 /**
  * Response with Parking information for display operations
  */

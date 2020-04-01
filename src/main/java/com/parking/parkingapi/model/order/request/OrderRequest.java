@@ -1,4 +1,4 @@
-package com.parking.parkingapi.model.car.request;
+package com.parking.parkingapi.model.order.request;
 
 import com.parking.parkingapi.model.common.ParkingServiceType;
 
