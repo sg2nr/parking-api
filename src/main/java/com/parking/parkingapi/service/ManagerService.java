@@ -9,14 +9,14 @@ import java.util.List;
 
 /**
  * Parking-API business services have to implement this interface.
- * BusinessService interface provides most common CRUD operations.
+ * ManagerService interface provides most common CRUD operations.
  *
  * @param <T>
  *   The corresponding DTO
  * @param <ID>
  *   The entity identifier
  */
-public interface BusinessService<T extends ParkingApiDto, ID extends Serializable> {
+public interface ManagerService<T extends ParkingApiDto, ID extends Serializable> {
 
   T find(ID id) throws EntityNotFoundException;
 

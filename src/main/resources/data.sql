@@ -15,9 +15,9 @@ INSERT INTO parkings (parking_name, address, city, pricing_policy) VALUES
     ('Parking Monte Carlo', 'Place du Casino', 'Monaco', 1);
 
 INSERT INTO vehicles (plate, vehicle_engine_type) VALUES
-    ('AA-123-AA', 'gasoline'),
-    ('AB-321-BA', '20kw'),
-    ('YY-897-ZZ', '50kw');
+    ('AA123AA', 'gasoline'),
+    ('AB321BA', '20kw'),
+    ('YY897ZZ', '50kw');
 
 INSERT INTO parking_slots (slot_number, vehicle_allowed, parking_id) VALUES
     (2, 'gasoline', 1),
@@ -46,6 +46,6 @@ INSERT INTO parking_slots (slot_number, vehicle_allowed, parking_id) VALUES
     (9, '50kw', 3);
 
 INSERT INTO parking_logs (timestamp_in, vehicle_plate, slot_id) VALUES
-    ('2020-03-28 10:23:54+02', 'AA-123-AA', 1),
-    ('2020-03-29 10:23:54+02', 'AB-321-BA', 5),
-    ('2020-03-30 08:23:54+02', 'YY-897-ZZ', 6);
+    ('2020-03-31 10:23:54+02', 'AA123AA', 1),
+    ('2020-03-30 10:23:54+02', 'AB321BA', 5),
+    ('2020-04-01 08:23:54+02', 'YY897ZZ', 6);

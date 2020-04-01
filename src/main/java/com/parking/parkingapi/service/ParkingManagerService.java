@@ -28,9 +28,9 @@ import static java.util.stream.Collectors.toList;
  * This class is responsible for the Parking business logic.
  */
 @Component
-public class ParkingBusinessService implements BusinessService<Parking, Long> {
+public class ParkingManagerService implements ManagerService<Parking, Long> {
 
-  private static final Logger LOG = LoggerFactory.getLogger(ParkingBusinessService.class);
+  private static final Logger LOG = LoggerFactory.getLogger(ParkingManagerService.class);
 
   private static final String RETRIEVE_PARKING_ERROR_MESSAGE = "Impossible to retrieve parking with id: %s.";
 
@@ -47,7 +47,7 @@ public class ParkingBusinessService implements BusinessService<Parking, Long> {
   ParkingSlotMapper slotMapper;
 
   @Autowired
-  public ParkingBusinessService(
+  public ParkingManagerService(
       ParkingDao parkingDao, ParkingSlotDao parkingSlotDao, ParkingLogsDao parkingLogsDao,
       ParkingMapper mapper, ParkingSlotMapper slotMapper) {
     this.parkingDao = parkingDao;

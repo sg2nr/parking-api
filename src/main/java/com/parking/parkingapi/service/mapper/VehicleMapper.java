@@ -10,18 +10,22 @@ import org.springframework.stereotype.Component;
  * Mapper for Car objects.
  */
 @Component
-public class CarMapper {
+public class VehicleMapper {
 
   private ParkingServiceTypeConverter parkingServiceTypeConverter;
 
   @Autowired
-  public CarMapper(ParkingServiceTypeConverter parkingServiceTypeConverter) {
+  public VehicleMapper(ParkingServiceTypeConverter parkingServiceTypeConverter) {
     this.parkingServiceTypeConverter = parkingServiceTypeConverter;
   }
 
   public Vehicle mapToDto(VehicleEntity vehicleEntity) {
     return new Car(vehicleEntity.getPlate(),
         parkingServiceTypeConverter.convertToParkingService(vehicleEntity.getEngineType()));
+  }
+
+  public VehicleEntity mapToEntity(Vehicle vehicle) {
+    return new VehicleEntity(vehicle.getPlate(), parkingServiceTypeConverter.convertToVehiclePoweredType(vehicle.getRequestedService()));
   }
 
 }

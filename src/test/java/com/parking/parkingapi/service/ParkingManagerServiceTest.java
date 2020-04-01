@@ -8,7 +8,7 @@ import com.parking.parkingapi.exception.EntityNotFoundException;
 import com.parking.parkingapi.model.entities.ParkingEntity;
 import com.parking.parkingapi.model.entities.ParkingSlotEntity;
 import com.parking.parkingapi.model.parking.Parking;
-import com.parking.parkingapi.service.mapper.CarMapper;
+import com.parking.parkingapi.service.mapper.VehicleMapper;
 import com.parking.parkingapi.service.mapper.ParkingMapper;
 import com.parking.parkingapi.service.mapper.ParkingServiceTypeConverter;
 import com.parking.parkingapi.service.mapper.ParkingSlotMapper;
@@ -33,9 +33,9 @@ import static org.mockito.ArgumentMatchers.anyLong;
 
 @ExtendWith(SpringExtension.class)
 @TestInstance(Lifecycle.PER_CLASS)
-class ParkingBusinessServiceTest {
+class ParkingManagerServiceTest {
 
-  ParkingBusinessService parkingBusinessService;
+  ParkingManagerService parkingBusinessService;
 
   ParkingDao parkingDao;
 
@@ -50,11 +50,11 @@ class ParkingBusinessServiceTest {
     parkingLogsDao = Mockito.mock(ParkingLogsDao.class);
 
     ParkingServiceTypeConverter parkingServiceTypeConverter = new ParkingServiceTypeConverter();
-    CarMapper carMapper = new CarMapper(parkingServiceTypeConverter);
-    ParkingSlotMapper slotMapper = new ParkingSlotMapper(carMapper, parkingServiceTypeConverter);
+    VehicleMapper vehicleMapper = new VehicleMapper(parkingServiceTypeConverter);
+    ParkingSlotMapper slotMapper = new ParkingSlotMapper(vehicleMapper, parkingServiceTypeConverter);
     ParkingMapper mapper = new ParkingMapper(slotMapper);
 
-    parkingBusinessService = new ParkingBusinessService(parkingDao, parkingSlotDao, parkingLogsDao,
+    parkingBusinessService = new ParkingManagerService(parkingDao, parkingSlotDao, parkingLogsDao,
         mapper, slotMapper);
   }
 

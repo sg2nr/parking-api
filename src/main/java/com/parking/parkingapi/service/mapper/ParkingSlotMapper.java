@@ -21,13 +21,13 @@ import static java.util.stream.Collectors.toList;
 @Component
 public class ParkingSlotMapper {
 
-  private CarMapper carMapper;
+  private VehicleMapper vehicleMapper;
 
   private ParkingServiceTypeConverter parkingServiceTypeConverter;
 
   @Autowired
-  public ParkingSlotMapper(CarMapper carMapper, ParkingServiceTypeConverter parkingServiceTypeConverter) {
-    this.carMapper = carMapper;
+  public ParkingSlotMapper(VehicleMapper vehicleMapper, ParkingServiceTypeConverter parkingServiceTypeConverter) {
+    this.vehicleMapper = vehicleMapper;
     this.parkingServiceTypeConverter = parkingServiceTypeConverter;
   }
 
@@ -55,11 +55,12 @@ public class ParkingSlotMapper {
         .collect(toList());
   }
 
-  private ParkingSlot mapSlotEntityToDto(ParkingSlotEntity se, List<ParkingLogEntity> logEntities) {
+  private ParkingSlot mapSlotEntityToDto(ParkingSlotEntity slotEntity, List<ParkingLogEntity> logEntities) {
     ParkingSlot parkingSlot = new ParkingSlot();
-    parkingSlot.setNumber(se.getId());
-    parkingSlot.setOfferedService(parkingServiceTypeConverter.convertToParkingService(se.getVehicleAllowed()));
-    getVehicleEntity(se, logEntities).ifPresent(v -> parkingSlot.setVehicle(carMapper.mapToDto(v)));
+    parkingSlot.setId(slotEntity.getId());
+    parkingSlot.setNumber(slotEntity.getId());
+    parkingSlot.setOfferedService(parkingServiceTypeConverter.convertToParkingService(slotEntity.getVehicleAllowed()));
+    getVehicleEntity(slotEntity, logEntities).ifPresent(v -> parkingSlot.setVehicle(vehicleMapper.mapToDto(v)));
 
     return parkingSlot;
   }

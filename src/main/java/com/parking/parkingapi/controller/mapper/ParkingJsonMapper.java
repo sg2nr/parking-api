@@ -1,6 +1,6 @@
 package com.parking.parkingapi.controller.mapper;
 
-import com.parking.parkingapi.exception.BadJsonRequest;
+import com.parking.parkingapi.exception.BadJsonRequestException;
 import com.parking.parkingapi.model.common.ParkingServiceType;
 import com.parking.parkingapi.model.parking.Parking;
 import com.parking.parkingapi.model.parking.ParkingBuilder;
@@ -43,12 +43,12 @@ public class ParkingJsonMapper {
         .build();
   }
 
-  public Parking mapToDto(@NotNull CreateParkingRequest request) throws BadJsonRequest {
+  public Parking mapToDto(@NotNull CreateParkingRequest request) throws BadJsonRequestException {
 
     // Requested slots are mandatory
     Map<ParkingServiceType, Integer> requestedSlots = request.getRequestedSlots();
     if (CollectionUtils.isEmpty(requestedSlots)) {
-      throw new BadJsonRequest("Element 'requestedSlots' is mandatory");
+      throw new BadJsonRequestException("Element 'requestedSlots' is mandatory");
     }
 
     List<ParkingSlot> parkingSlots = createParkingSlots(requestedSlots);

@@ -5,7 +5,7 @@ import com.parking.parkingapi.TestUtils;
 import com.parking.parkingapi.exception.EntityNotFoundException;
 import com.parking.parkingapi.model.parking.Parking;
 import com.parking.parkingapi.model.parking.response.DisplayParkingResponse;
-import com.parking.parkingapi.service.ParkingBusinessService;
+import com.parking.parkingapi.service.ParkingManagerService;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.util.StringUtils;
 import org.mockito.Mockito;
@@ -32,7 +32,7 @@ class ParkingControllerTest {
   private MockMvc mockMvc;
 
   @MockBean
-  private ParkingBusinessService parkingBusinessService;
+  private ParkingManagerService parkingBusinessService;
 
   @Test
   public void getExistingParking() throws Exception {

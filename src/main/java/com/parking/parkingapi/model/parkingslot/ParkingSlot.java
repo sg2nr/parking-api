@@ -12,11 +12,21 @@ import java.util.Objects;
  */
 public class ParkingSlot implements ParkingApiDto {
 
+  private long id;
+
   private long number;
 
   private ParkingServiceType offeredService;
 
   private Vehicle vehicle;
+
+  public long getId() {
+    return id;
+  }
+
+  public void setId(long id) {
+    this.id = id;
+  }
 
   public long getNumber() {
     return number;
