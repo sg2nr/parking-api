@@ -16,5 +16,5 @@ public interface ParkingLogsDao extends JpaRepository<ParkingLogEntity, Long> {
 
   List<ParkingLogEntity> findByVehicleEntity(VehicleEntity vehicleEntity);
 
-  List<ParkingLogEntity> findAllByParkingSlotEntityIn(List<ParkingSlotEntity> parkingSlotEntities);
+  List<ParkingLogEntity> findByParkingSlotEntityIn(List<ParkingSlotEntity> parkingSlotEntities);
 }

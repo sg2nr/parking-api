@@ -3,7 +3,9 @@ package com.parking.parkingapi.controller;
 import com.parking.parkingapi.controller.mapper.OrderJsonMapper;
 import com.parking.parkingapi.exception.EntityCreationViolation;
 import com.parking.parkingapi.exception.EntityNotFoundException;
+import com.parking.parkingapi.exception.InvalidInputDataException;
 import com.parking.parkingapi.exception.NoSlotAvailableException;
+import com.parking.parkingapi.exception.VehicleAlreadyParkedException;
 import com.parking.parkingapi.model.car.OrderDto;
 import com.parking.parkingapi.model.car.request.OrderRequest;
 import com.parking.parkingapi.model.car.response.OrderResponse;
@@ -34,7 +36,8 @@ public class OrderController {
   @PostMapping("parkings/{parkingId}/order")
   @ResponseStatus(HttpStatus.CREATED)
   public OrderResponse checkInCar(@RequestBody OrderRequest request, @Valid @PathVariable long parkingId)
-      throws EntityNotFoundException, EntityCreationViolation, NoSlotAvailableException {
+      throws EntityNotFoundException, EntityCreationViolation, NoSlotAvailableException,
+      VehicleAlreadyParkedException, InvalidInputDataException {
 
     OrderDto order = orderBusinessService.createOrder(orderJsonMapper.mapToDto(request, parkingId));
     return orderJsonMapper.mapToResponse(order);

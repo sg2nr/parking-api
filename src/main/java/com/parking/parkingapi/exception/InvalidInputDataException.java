@@ -4,9 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Bad JSON request")
-public class BadJsonRequestException extends Exception {
+public class InvalidInputDataException extends Exception {
 
-  public BadJsonRequestException(String message) {
+  public InvalidInputDataException(String message) {
     super(message);
   }
 }

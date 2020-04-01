@@ -6,6 +6,8 @@ import com.parking.parkingapi.model.entities.VehicleEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+
 /**
  * Mapper for Car objects.
  */
@@ -25,7 +27,10 @@ public class VehicleMapper {
   }
 
   public VehicleEntity mapToEntity(Vehicle vehicle) {
-    return new VehicleEntity(vehicle.getPlate(), parkingServiceTypeConverter.convertToVehiclePoweredType(vehicle.getRequestedService()));
+    VehicleEntity vehicleEntity = new VehicleEntity(vehicle.getPlate(),
+        parkingServiceTypeConverter.convertToVehiclePoweredType(vehicle.getRequestedService()));
+    vehicleEntity.setParkingLogEntities(new ArrayList<>());
+    return vehicleEntity;
   }
 
 }

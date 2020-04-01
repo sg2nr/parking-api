@@ -1,7 +1,7 @@
 package com.parking.parkingapi.controller;
 
 import com.parking.parkingapi.controller.mapper.ParkingJsonMapper;
-import com.parking.parkingapi.exception.BadJsonRequestException;
+import com.parking.parkingapi.exception.InvalidInputDataException;
 import com.parking.parkingapi.exception.EntityCreationViolation;
 import com.parking.parkingapi.exception.EntityNotFoundException;
 import com.parking.parkingapi.model.parking.Parking;
@@ -53,7 +53,7 @@ public class ParkingController {
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   public DisplayParkingResponse createParking(@RequestBody CreateParkingRequest request)
-      throws EntityCreationViolation, BadJsonRequestException {
+      throws EntityCreationViolation, InvalidInputDataException {
 
     Parking requestedParking = mapper.mapToDto(request);
     Parking createdParking = parkingManagerService.create(requestedParking);
