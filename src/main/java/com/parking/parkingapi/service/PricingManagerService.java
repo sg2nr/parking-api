@@ -1,7 +1,6 @@
 package com.parking.parkingapi.service;
 
 import com.parking.parkingapi.dao.PricingPolicyDao;
-import com.parking.parkingapi.exception.EntityCreationViolation;
 import com.parking.parkingapi.exception.EntityNotFoundException;
 import com.parking.parkingapi.model.entities.PricingPolicyEntity;
 import com.parking.parkingapi.model.pricing.PricingPolicy;
@@ -53,8 +52,7 @@ public class PricingManagerService implements ManagerService<PricingPolicy, Long
 
   @Override
   public void delete(Long pricingPolicyId) throws EntityNotFoundException {
-    PricingPolicyEntity pricingPolicyEntity = findPricingPolicyEntity(pricingPolicyId);
-    pricingPolicyDao.delete(pricingPolicyEntity);
+    // Not implemented
   }
 
   private PricingPolicyEntity findPricingPolicyEntity(Long pricingPolicyId) throws EntityNotFoundException {
