@@ -85,6 +85,7 @@ No password is needed.
 ## API description
 
 Here you can find an overview of the operations provided by **parking-api**.
+You can find more information concerning the architecture under the "attachments" directory.
 
 ### Retrieve all parkings
 #### Request
