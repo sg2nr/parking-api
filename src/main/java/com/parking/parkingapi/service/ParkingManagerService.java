@@ -60,7 +60,7 @@ public class ParkingManagerService implements ManagerService<Parking, Long> {
   public Parking find(Long id) throws EntityNotFoundException {
     ParkingEntity parkingEntity = findParkingEntity(id);
     List<ParkingSlotEntity> slotEntities = parkingSlotDao.findByParkingEntity(parkingEntity);
-    List<ParkingLogEntity> logEntities = parkingLogsDao.findAll();
+    List<ParkingLogEntity> logEntities = parkingLogsDao.findAllByParkingSlotEntityIn(slotEntities);
     return mapper.mapToDto(parkingEntity, slotEntities, logEntities);
   }
 
