@@ -14,6 +14,9 @@ import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
+/**
+ * Service responsible to support CRUD operations related to pricing policy.
+ */
 @Component
 public class PricingManagerService implements ManagerService<PricingPolicy, Long> {
 
@@ -51,7 +54,7 @@ public class PricingManagerService implements ManagerService<PricingPolicy, Long
   }
 
   @Override
-  public void delete(Long pricingPolicyId) throws EntityNotFoundException {
+  public void delete(Long pricingPolicyId) {
     // Not implemented
   }
 

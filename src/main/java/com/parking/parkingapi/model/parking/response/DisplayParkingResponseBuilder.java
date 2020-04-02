@@ -3,7 +3,7 @@ package com.parking.parkingapi.model.parking.response;
 import com.parking.parkingapi.model.pricing.PricingPolicy;
 
 /**
- * Builder for Parking DTO in Response
+ * Builder for Parking information in JSON Response
  */
 public final class DisplayParkingResponseBuilder {
 

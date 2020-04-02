@@ -15,7 +15,7 @@ import java.util.Objects;
 import static java.util.stream.Collectors.toList;
 
 /**
- * Mapper for Parking DTO - Entity conversion and vice - versa.
+ * Mapper for Parking data model - Entity conversion and vice - versa.
  */
 @Component
 public class ParkingMapper {
@@ -46,14 +46,14 @@ public class ParkingMapper {
   }
 
   /**
-   * It creates the Parking Dto from the entities in input.
+   * It creates the Parking domain object from the entities in input.
    *
    * @param parkingEntity
    * @param slotEntities
    * @param logEntities
    * @return
    */
-  public Parking mapToDto(
+  public Parking mapToParking(
       @NotNull ParkingEntity parkingEntity, @NotNull List<ParkingSlotEntity> slotEntities, @NotNull List<ParkingLogEntity> logEntities) {
 
     List<ParkingSlotEntity> correspondingSlotEntities = slotEntities.stream()

@@ -55,7 +55,7 @@ public class ParkingController {
   public DisplayParkingResponse createParking(@RequestBody CreateParkingRequest request)
       throws EntityCreationViolation, InvalidInputDataException {
 
-    Parking requestedParking = mapper.mapToDto(request);
+    Parking requestedParking = mapper.mapToParking(request);
     Parking createdParking = parkingManagerService.create(requestedParking);
     return mapper.mapToResponse(createdParking);
   }

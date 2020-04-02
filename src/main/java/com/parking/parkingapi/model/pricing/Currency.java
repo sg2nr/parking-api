@@ -3,7 +3,7 @@ package com.parking.parkingapi.model.pricing;
 import java.util.Objects;
 
 /**
- * Data Transfer Object representing Currency
+ * The data model representing a Currency
  */
 public class Currency {
 

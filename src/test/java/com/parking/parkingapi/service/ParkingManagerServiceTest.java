@@ -36,7 +36,7 @@ import static org.mockito.ArgumentMatchers.anyLong;
 @TestInstance(Lifecycle.PER_CLASS)
 class ParkingManagerServiceTest {
 
-  ParkingManagerService parkingBusinessService;
+  ParkingManagerService parkingManagerService;
 
   ParkingDao parkingDao;
 
@@ -58,7 +58,7 @@ class ParkingManagerServiceTest {
     ParkingSlotMapper slotMapper = new ParkingSlotMapper(vehicleMapper, parkingServiceTypeConverter);
     ParkingMapper mapper = new ParkingMapper(slotMapper);
 
-    parkingBusinessService = new ParkingManagerService(parkingDao, parkingSlotDao, parkingLogsDao,
+    parkingManagerService = new ParkingManagerService(parkingDao, parkingSlotDao, parkingLogsDao,
         mapper, slotMapper, pricingPolicyDao);
   }
 
@@ -72,7 +72,7 @@ class ParkingManagerServiceTest {
 
     Mockito.when(parkingLogsDao.findAll()).thenReturn(new ArrayList<>());
 
-    Parking parking = parkingBusinessService.find(TestUtils.PARKING_ID_1);
+    Parking parking = parkingManagerService.find(TestUtils.PARKING_ID_1);
 
     assertEquals(TestUtils.PARKING_ID_1, parking.getId());
     assertEquals(TestUtils.PARKING_NAME_1, parking.getName());
@@ -87,7 +87,7 @@ class ParkingManagerServiceTest {
     Mockito.when(parkingLogsDao.findAll()).thenReturn(new ArrayList<>());
 
     Exception exception = assertThrows(EntityNotFoundException.class,
-        () -> parkingBusinessService.find(TestUtils.PARKING_ID_1));
+        () -> parkingManagerService.find(TestUtils.PARKING_ID_1));
 
     String expectedMessage = "Impossible to retrieve parking with id: 1.";
     String actualMessage = exception.getMessage();
@@ -100,7 +100,7 @@ class ParkingManagerServiceTest {
     Mockito.when(parkingDao.findById(anyLong())).thenReturn(Optional.empty());
 
     Exception exception = assertThrows(EntityNotFoundException.class,
-        () -> parkingBusinessService.delete(TestUtils.PARKING_ID_1));
+        () -> parkingManagerService.delete(TestUtils.PARKING_ID_1));
 
     String expectedMessage = "Impossible to retrieve parking with id: 1.";
     String actualMessage = exception.getMessage();

@@ -3,7 +3,7 @@ package com.parking.parkingapi.service;
 import com.parking.parkingapi.model.common.ParkingApiDO;
 
 /**
- * Orchestrators are service that perform operations which are more
+ * Orchestrators are services that perform operations which are more
  * complex than usual CRUD ones.
  *
  * Orchestrators calls different ManagerServices and DAOs.

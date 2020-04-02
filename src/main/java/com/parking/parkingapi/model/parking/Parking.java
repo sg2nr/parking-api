@@ -7,7 +7,7 @@ import com.parking.parkingapi.model.pricing.PricingPolicy;
 import java.util.List;
 
 /**
- * Data Transfer Object representing a Parking lot.
+ * The model representing a Parking lot.
  */
 public class Parking implements ParkingApiDO {
 

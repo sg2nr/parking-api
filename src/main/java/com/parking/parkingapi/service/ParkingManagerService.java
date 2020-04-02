@@ -66,7 +66,7 @@ public class ParkingManagerService implements ManagerService<Parking, Long> {
     ParkingEntity parkingEntity = findParkingEntity(id);
     List<ParkingSlotEntity> slotEntities = parkingSlotDao.findByParkingEntity(parkingEntity);
     List<ParkingLogEntity> logEntities = parkingLogsDao.findByParkingSlotEntityIn(slotEntities);
-    return mapper.mapToDto(parkingEntity, slotEntities, logEntities);
+    return mapper.mapToParking(parkingEntity, slotEntities, logEntities);
   }
 
   public Parking create(@NotNull Parking createParkingRequest) throws EntityCreationViolation {
@@ -84,7 +84,7 @@ public class ParkingManagerService implements ManagerService<Parking, Long> {
       List<ParkingSlotEntity> slotEntities = slotMapper.mapSlotsToEntities(parkingEntity, createParkingRequest.getParkingSlots());
       List<ParkingSlotEntity> createdSlotEntities = parkingSlotDao.saveAll(slotEntities);
 
-      return mapper.mapToDto(createdEntity, createdSlotEntities, new ArrayList<>());
+      return mapper.mapToParking(createdEntity, createdSlotEntities, new ArrayList<>());
     } catch (DataIntegrityViolationException e) {
       LOG.error(CREATION_PARKING_ERROR_MESSAGE);
       throw new EntityCreationViolation(CREATION_PARKING_ERROR_MESSAGE);
@@ -97,7 +97,7 @@ public class ParkingManagerService implements ManagerService<Parking, Long> {
     List<ParkingLogEntity> logEntities = parkingLogsDao.findAll();
 
     return parkingEntities.stream()
-        .map(p -> mapper.mapToDto(p, slotEntities, logEntities))
+        .map(p -> mapper.mapToParking(p, slotEntities, logEntities))
         .collect(toList());
   }
 

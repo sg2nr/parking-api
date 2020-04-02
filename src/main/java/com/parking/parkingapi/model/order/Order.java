@@ -7,10 +7,10 @@ import com.parking.parkingapi.model.vehicle.Vehicle;
 import java.time.ZonedDateTime;
 
 /**
- * DTO to support the check-in and check-out of a
+ * The data model to support the check-in and check-out of a
  * vehicle.
  */
-public class OrderDO implements ParkingApiDO {
+public class Order implements ParkingApiDO {
 
   private Vehicle vehicle;
 
@@ -26,7 +26,7 @@ public class OrderDO implements ParkingApiDO {
 
   private long orderId;
 
-  public OrderDO() {
+  public Order() {
   }
 
   public Vehicle getVehicle() {

@@ -1,7 +1,7 @@
 package com.parking.parkingapi.model.pricing;
 
 /**
- * DTO for storing Price information.
+ * The data model for storing Price information.
  */
 public class Price {
 

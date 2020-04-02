@@ -1,10 +1,8 @@
 package com.parking.parkingapi.model.parkingslot;
 
 import com.parking.parkingapi.model.common.ParkingApiDO;
-import com.parking.parkingapi.model.vehicle.Vehicle;
 import com.parking.parkingapi.model.common.ParkingServiceType;
-
-import java.util.Objects;
+import com.parking.parkingapi.model.vehicle.Vehicle;
 
 /**
  * It represents a parking slot and provides method to allow a vehicle
@@ -51,39 +49,9 @@ public class ParkingSlot implements ParkingApiDO {
   /**
    * It returns the status of the parking slot.
    *
-   * @return
-   *    <code>true</code>: the slot is available, <code>false</code> otherwise.
+   * @return <code>true</code>: the slot is available, <code>false</code> otherwise.
    */
   public boolean isFree() {
     return vehicle == null;
-  }
-
-  /**
-   * The vehicle in input is parked in the slot, if eligible.
-   *
-   * @param vehicle
-   * @return
-   *    It returns <code>true</code> if check-in is successful.
-   */
-  public boolean checkIn(Vehicle vehicle) {
-    if (Objects.equals(vehicle.getRequestedService(), offeredService)) {
-      this.vehicle = vehicle;
-      return true;
-    }
-    return false;
-  }
-
-  /**
-   * It removes the parked vehicle.
-   *
-   * @return
-   *    It returns <code>true</code> if check-out was successful.
-   */
-  public boolean checkOut() {
-    if (isFree()) {
-      return false;
-    }
-    vehicle = null;
-    return true;
   }
 }

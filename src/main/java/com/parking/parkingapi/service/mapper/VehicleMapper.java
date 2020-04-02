@@ -21,7 +21,7 @@ public class VehicleMapper {
     this.parkingServiceTypeConverter = parkingServiceTypeConverter;
   }
 
-  public Vehicle mapToDto(VehicleEntity vehicleEntity) {
+  public Vehicle mapToVehicle(VehicleEntity vehicleEntity) {
     return new Car(vehicleEntity.getPlate(),
         parkingServiceTypeConverter.convertToParkingService(vehicleEntity.getEngineType()));
   }

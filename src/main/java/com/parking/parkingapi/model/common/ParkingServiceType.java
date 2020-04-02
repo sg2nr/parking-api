@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * Enumerator indicating the possible services offered by a Parking.
- * It is used by the Data Transfer Objects.
  */
 public enum ParkingServiceType {
 

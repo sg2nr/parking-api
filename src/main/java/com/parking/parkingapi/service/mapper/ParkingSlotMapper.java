@@ -16,7 +16,7 @@ import java.util.Optional;
 import static java.util.stream.Collectors.toList;
 
 /**
- * Mapper in charge for the ParkingSlot DTO - Entity.
+ * Mapper in charge for the ParkingSlot model - Entity conversion.
  */
 @Component
 public class ParkingSlotMapper {
@@ -51,16 +51,16 @@ public class ParkingSlotMapper {
 
   public List<ParkingSlot> mapSlotEntitiesToDto(List<ParkingSlotEntity> slotEntities, List<ParkingLogEntity> logEntities) {
     return slotEntities.stream()
-        .map(se -> mapSlotEntityToDto(se, logEntities))
+        .map(se -> mapSlotEntityToParkingSlot(se, logEntities))
         .collect(toList());
   }
 
-  private ParkingSlot mapSlotEntityToDto(ParkingSlotEntity slotEntity, List<ParkingLogEntity> logEntities) {
+  private ParkingSlot mapSlotEntityToParkingSlot(ParkingSlotEntity slotEntity, List<ParkingLogEntity> logEntities) {
     ParkingSlot parkingSlot = new ParkingSlot();
     parkingSlot.setId(slotEntity.getId());
     parkingSlot.setNumber(slotEntity.getId());
     parkingSlot.setOfferedService(parkingServiceTypeConverter.convertToParkingService(slotEntity.getVehicleAllowed()));
-    getVehicleEntity(slotEntity, logEntities).ifPresent(v -> parkingSlot.setVehicle(vehicleMapper.mapToDto(v)));
+    getVehicleEntity(slotEntity, logEntities).ifPresent(v -> parkingSlot.setVehicle(vehicleMapper.mapToVehicle(v)));
 
     return parkingSlot;
   }

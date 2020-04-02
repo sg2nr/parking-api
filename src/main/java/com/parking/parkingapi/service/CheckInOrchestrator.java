@@ -6,7 +6,7 @@ import com.parking.parkingapi.exception.EntityCreationViolation;
 import com.parking.parkingapi.exception.EntityNotFoundException;
 import com.parking.parkingapi.exception.NoSlotAvailableException;
 import com.parking.parkingapi.exception.VehicleAlreadyParkedException;
-import com.parking.parkingapi.model.order.OrderDO;
+import com.parking.parkingapi.model.order.Order;
 import com.parking.parkingapi.model.vehicle.Vehicle;
 import com.parking.parkingapi.model.entities.ParkingLogEntity;
 import com.parking.parkingapi.model.entities.ParkingSlotEntity;
@@ -23,8 +23,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * The aim of this orchestrator is to assign a vehicle to a free parking slot.
+ */
 @Component
-public class CheckInOrchestrator implements Orchestrator<OrderDO> {
+public class CheckInOrchestrator implements Orchestrator<Order> {
 
   private static final Logger LOG = LoggerFactory.getLogger(CheckInOrchestrator.class);
 
@@ -56,10 +59,10 @@ public class CheckInOrchestrator implements Orchestrator<OrderDO> {
   }
 
   @Override
-  public OrderDO run(OrderDO orderDto) throws EntityCreationViolation, NoSlotAvailableException,
+  public Order run(Order order) throws EntityCreationViolation, NoSlotAvailableException,
       VehicleAlreadyParkedException, EntityNotFoundException {
 
-    Vehicle vehicle = vehicleManagerService.create(orderDto.getVehicle());
+    Vehicle vehicle = vehicleManagerService.create(order.getVehicle());
     VehicleEntity vehicleEntity = vehicleMapper.mapToEntity(vehicle);
 
     if (isCurrentlyParked(vehicleEntity)) {
@@ -67,38 +70,38 @@ public class CheckInOrchestrator implements Orchestrator<OrderDO> {
       throw new VehicleAlreadyParkedException(VEHICLE_ALREADY_PARKED_ERROR_MESSAGE);
     }
 
-    ParkingLogEntity createdLog = registerCheckIn(orderDto, vehicleEntity);
+    ParkingLogEntity createdLog = registerCheckIn(order, vehicleEntity);
 
-    orderDto.setOrderId(createdLog.getId());
+    order.setOrderId(createdLog.getId());
 
-    return orderDto;
+    return order;
   }
 
-  private ParkingLogEntity registerCheckIn(OrderDO orderDto, VehicleEntity vehicleEntity) throws EntityNotFoundException, NoSlotAvailableException {
-    ParkingLogEntity logEntity = createParkingLogEntity(orderDto, vehicleEntity);
+  private ParkingLogEntity registerCheckIn(Order order, VehicleEntity vehicleEntity) throws EntityNotFoundException, NoSlotAvailableException {
+    ParkingLogEntity logEntity = createParkingLogEntity(order, vehicleEntity);
 
     return parkingLogsDao.save(logEntity);
   }
 
-  private ParkingLogEntity createParkingLogEntity(OrderDO orderDto, VehicleEntity vehicleEntity)
+  ParkingLogEntity createParkingLogEntity(Order order, VehicleEntity vehicleEntity)
       throws EntityNotFoundException, NoSlotAvailableException {
-    ParkingSlotEntity parkingSlotEntity = getParkingSlotEntity(orderDto);
-    orderDto.setSlotNumber(parkingSlotEntity.getSlotNumber());
+    ParkingSlotEntity parkingSlotEntity = getParkingSlotEntity(order);
+    order.setSlotNumber(parkingSlotEntity.getSlotNumber());
 
     ParkingLogEntity logEntity = new ParkingLogEntity();
-    logEntity.setTimeStampIn(orderDto.getTimeStampIn());
+    logEntity.setTimeStampIn(order.getTimeStampIn());
     logEntity.setVehicleEntity(vehicleEntity);
     logEntity.setParkingSlotEntity(parkingSlotEntity);
     return logEntity;
   }
 
-  private ParkingSlotEntity getParkingSlotEntity(OrderDO orderDto)
+  private ParkingSlotEntity getParkingSlotEntity(Order order)
       throws EntityNotFoundException, NoSlotAvailableException {
-    Parking parking = parkingManagerService.find(orderDto.getParkingId());
+    Parking parking = parkingManagerService.find(order.getParkingId());
 
     Optional<ParkingSlot> parkingSlotOptional = parking.getParkingSlots().stream()
         .filter(ParkingSlot::isFree)
-        .filter(s -> Objects.equals(orderDto.getVehicle().getRequestedService(), s.getOfferedService()))
+        .filter(s -> Objects.equals(order.getVehicle().getRequestedService(), s.getOfferedService()))
         .findAny();
 
     ParkingSlot parkingSlot = parkingSlotOptional

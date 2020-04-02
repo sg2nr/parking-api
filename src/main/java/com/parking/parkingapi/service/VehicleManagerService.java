@@ -37,7 +37,7 @@ public class VehicleManagerService implements ManagerService<Vehicle, String> {
   public Vehicle find(String plate) throws EntityNotFoundException {
     VehicleEntity vehicleEntity = findVehicleEntityByPlate(plate);
 
-    return vehicleMapper.mapToDto(vehicleEntity);
+    return vehicleMapper.mapToVehicle(vehicleEntity);
   }
 
   @Override
@@ -45,7 +45,7 @@ public class VehicleManagerService implements ManagerService<Vehicle, String> {
     VehicleEntity vehicleEntity = vehicleMapper.mapToEntity(newVehicle);
     try {
       VehicleEntity createdVehicle = vehicleDao.save(vehicleEntity);
-      return vehicleMapper.mapToDto(createdVehicle);
+      return vehicleMapper.mapToVehicle(createdVehicle);
     } catch (
         DataIntegrityViolationException e) {
       LOG.error(CREATION_VEHICLE_ERROR_MESSAGE);
@@ -56,7 +56,7 @@ public class VehicleManagerService implements ManagerService<Vehicle, String> {
   @Override
   public List<Vehicle> findAll() {
     return vehicleDao.findAll().stream()
-        .map(vehicleMapper::mapToDto)
+        .map(vehicleMapper::mapToVehicle)
         .collect(toList());
   }
 

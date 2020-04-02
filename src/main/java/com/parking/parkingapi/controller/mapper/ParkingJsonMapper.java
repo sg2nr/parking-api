@@ -27,7 +27,7 @@ import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toMap;
 
 /**
- * This class is intended for the mapping JSON - DTO, and vice-versa, of Parking
+ * This class is intended for the mapping JSON - Domain model, and vice-versa, of Parking
  * objects.
  */
 @Component
@@ -52,7 +52,7 @@ public class ParkingJsonMapper {
         .build();
   }
 
-  public Parking mapToDto(@NotNull CreateParkingRequest request) throws InvalidInputDataException {
+  public Parking mapToParking(@NotNull CreateParkingRequest request) throws InvalidInputDataException {
 
     // Perform input validation
     if (Objects.isNull(request.getName()) || Objects.isNull(request.getAddress()) || Objects.isNull(request.getCity())) {

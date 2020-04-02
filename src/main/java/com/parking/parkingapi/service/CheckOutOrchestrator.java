@@ -7,8 +7,8 @@ import com.parking.parkingapi.exception.OrderNotFoundException;
 import com.parking.parkingapi.exception.TemporaryDataInconsistencyException;
 import com.parking.parkingapi.model.entities.ParkingEntity;
 import com.parking.parkingapi.model.entities.ParkingLogEntity;
-import com.parking.parkingapi.model.order.OrderDO;
-import com.parking.parkingapi.model.order.OrderDtoBuilder;
+import com.parking.parkingapi.model.order.Order;
+import com.parking.parkingapi.model.order.OrderBuilder;
 import com.parking.parkingapi.model.pricing.Price;
 import com.parking.parkingapi.model.pricing.PricingPolicy;
 import com.parking.parkingapi.model.vehicle.Vehicle;
@@ -23,8 +23,12 @@ import java.time.ZonedDateTime;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * This service is responsible to remove a vehicle from a parking slot and compute
+ * the final price.
+ */
 @Component
-public class CheckOutOrchestrator implements Orchestrator<OrderDO> {
+public class CheckOutOrchestrator implements Orchestrator<Order> {
 
   private static final Logger LOG = LoggerFactory.getLogger(CheckOutOrchestrator.class);
 
@@ -45,19 +49,19 @@ public class CheckOutOrchestrator implements Orchestrator<OrderDO> {
   }
 
   @Override
-  public OrderDO run(OrderDO orderDto) throws OrderNotFoundException, NoPricingPolicyFound,
+  public Order run(Order order) throws OrderNotFoundException, NoPricingPolicyFound,
       TemporaryDataInconsistencyException, CheckOutAlreadyPerformedException {
 
-    long orderId = orderDto.getOrderId();
+    long orderId = order.getOrderId();
 
     ParkingLogEntity savedLog = updateLog(orderId);
 
     Price amount = computeAmount(savedLog);
 
     // Mapping
-    Vehicle vehicle = vehicleMapper.mapToDto(savedLog.getVehicleEntity());
+    Vehicle vehicle = vehicleMapper.mapToVehicle(savedLog.getVehicleEntity());
     ParkingEntity parkingEntity = savedLog.getParkingSlotEntity().getParkingEntity();
-    return OrderDtoBuilder.builder()
+    return OrderBuilder.builder()
         .withOrderId(orderId)
         .withTimeStampIn(savedLog.getTimeStampIn())
         .withTimeStampOut(savedLog.getTimeStampOut())
@@ -84,7 +88,7 @@ public class CheckOutOrchestrator implements Orchestrator<OrderDO> {
     return parkingLogsDao.save(log);
   }
 
-  private Price computeAmount(ParkingLogEntity savedLog) throws NoPricingPolicyFound, TemporaryDataInconsistencyException {
+  Price computeAmount(ParkingLogEntity savedLog) throws NoPricingPolicyFound, TemporaryDataInconsistencyException {
     ParkingEntity parkingEntity = savedLog.getParkingSlotEntity().getParkingEntity();
     PricingPolicy pricingPolicy = PricingPolicyFactory.createPricingPolicy(parkingEntity)
         .orElseThrow(() -> new NoPricingPolicyFound(String.format(NO_POLICY_FOUND_ERROR_MESSAGE, parkingEntity.getId())));

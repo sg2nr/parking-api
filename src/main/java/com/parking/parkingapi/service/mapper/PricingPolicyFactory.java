@@ -13,6 +13,8 @@ import java.util.Optional;
 
 /**
  * Factory class for PricingPolicy.
+ * Callers invoking this class, don't exactly which pricing policy type has been
+ * instantiated.
  */
 public class PricingPolicyFactory {
 
