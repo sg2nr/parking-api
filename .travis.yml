@@ -4,20 +4,8 @@ jdk: oraclejdk11
 before_install:
   - chmod +x mvnw
 
-install:
-  - nvm install 10
-  - npm install newman
-
-before_script:
-  - node --version
-  - npm --version
-  - node_modules/.bin/newman --version
-  - mvn clean package
-  - docker build -t sg2nr/parking-api-docker .
-  - docker run -p 8080:8080 sg2nr/parking-api-docker
-
 script:
-  - node_modules/.bin/newman run tests/Parking-Api.postman_collection.json
+  - ./mvnw clean install -B
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
