@@ -1,5 +1,6 @@
 package com.parking.parkingapi.model.pricing;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.parking.parkingapi.exception.TemporaryDataInconsistencyException;
 import com.parking.parkingapi.model.common.ParkingApiDO;
 
@@ -8,6 +9,7 @@ import java.time.ZonedDateTime;
 /**
  * Abstraction of a Pricing Policy that prices in function of the time spent in the parking.
  */
+@JsonDeserialize(as = PricingPerHourPolicy.class)
 public interface PricingPolicy extends ParkingApiDO {
 
   /**

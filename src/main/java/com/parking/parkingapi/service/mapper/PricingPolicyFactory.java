@@ -16,7 +16,11 @@ import java.util.Optional;
  * Callers invoking this class, don't exactly which pricing policy type has been
  * instantiated.
  */
-public class PricingPolicyFactory {
+public final class PricingPolicyFactory {
+
+  private PricingPolicyFactory() {
+    throw new IllegalStateException("Utility class");
+  }
 
   /**
    * It instantiates a PricingPolicy based on information in the input ParkingEntity.

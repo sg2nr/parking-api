@@ -1,19 +1,17 @@
 package com.parking.parkingapi.model.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.persistence.*;
 import java.util.List;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "parking_slots")
+@Getter
+@Setter
 public class ParkingSlotEntity {
 
   @Id
@@ -41,46 +39,6 @@ public class ParkingSlotEntity {
     this.parkingEntity = parkingEntity;
     this.slotNumber = slotNumber;
     this.vehicleAllowed = vehicleAllowed;
-    this.parkingLogEntities = parkingLogEntities;
-  }
-
-  public long getId() {
-    return id;
-  }
-
-  public void setId(long id) {
-    this.id = id;
-  }
-
-  public ParkingEntity getParkingEntity() {
-    return parkingEntity;
-  }
-
-  public void setParkingEntity(ParkingEntity parkingEntity) {
-    this.parkingEntity = parkingEntity;
-  }
-
-  public long getSlotNumber() {
-    return slotNumber;
-  }
-
-  public void setSlotNumber(long slotNumber) {
-    this.slotNumber = slotNumber;
-  }
-
-  public EngineType getVehicleAllowed() {
-    return vehicleAllowed;
-  }
-
-  public void setVehicleAllowed(EngineType vehicleAllowed) {
-    this.vehicleAllowed = vehicleAllowed;
-  }
-
-  public List<ParkingLogEntity> getParkingLogEntities() {
-    return parkingLogEntities;
-  }
-
-  public void setParkingLogEntities(List<ParkingLogEntity> parkingLogEntities) {
     this.parkingLogEntities = parkingLogEntities;
   }
 }

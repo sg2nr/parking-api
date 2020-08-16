@@ -1,10 +1,14 @@
 package com.parking.parkingapi.model.parking.response;
 
 import com.parking.parkingapi.model.pricing.PricingPolicy;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Response with Parking information for display operations
  */
+@Getter
+@Setter
 public class DisplayParkingResponse {
 
   private long id;
@@ -17,56 +21,5 @@ public class DisplayParkingResponse {
 
   private ParkingStatistics statistics;
 
-  public DisplayParkingResponse() {
-  }
-
-  public long getId() {
-    return id;
-  }
-
-  public void setId(long id) {
-    this.id = id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public String getAddress() {
-    return address;
-  }
-
-  public void setAddress(String address) {
-    this.address = address;
-  }
-
-  public String getCity() {
-    return city;
-  }
-
-  public void setCity(String city) {
-    this.city = city;
-  }
-
-  public ParkingStatistics getStatistics() {
-    return statistics;
-  }
-
-  public void setStatistics(ParkingStatistics statistics) {
-    this.statistics = statistics;
-  }
-
   private PricingPolicy pricingPolicy;
-
-  public PricingPolicy getPricingPolicy() {
-    return pricingPolicy;
-  }
-
-  public void setPricingPolicy(PricingPolicy pricingPolicy) {
-    this.pricingPolicy = pricingPolicy;
-  }
 }

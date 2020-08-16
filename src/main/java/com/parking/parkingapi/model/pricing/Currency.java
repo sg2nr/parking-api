@@ -1,22 +1,20 @@
 package com.parking.parkingapi.model.pricing;
 
+import lombok.Getter;
+
 import java.util.Objects;
 
 /**
  * The data model representing a Currency
  */
+@Getter
 public class Currency {
 
-  private final String currencyCode;
+  private String currencyCode;
 
-  private final int decimalPlaces;
+  private int decimalPlaces;
 
-  public String getCurrencyCode() {
-    return currencyCode;
-  }
-
-  public int getDecimalPlaces() {
-    return decimalPlaces;
+  public Currency() {
   }
 
   public Currency(String currencyCode, int decimalPlaces) {

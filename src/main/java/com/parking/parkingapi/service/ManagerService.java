@@ -13,16 +13,16 @@ import java.util.List;
  *
  * @param <T>
  *   The corresponding Domain object
- * @param <ID>
+ * @param <U>
  *   The entity identifier
  */
-public interface ManagerService<T extends ParkingApiDO, ID extends Serializable> {
+public interface ManagerService<T extends ParkingApiDO, U extends Serializable> {
 
-  T find(ID id) throws EntityNotFoundException;
+  T find(U id) throws EntityNotFoundException;
 
   T create(T newElement) throws EntityCreationViolation;
 
   List<T> findAll();
 
-  void delete(ID id) throws EntityNotFoundException;
+  void delete(U id) throws EntityNotFoundException;
 }

@@ -1,12 +1,16 @@
 package com.parking.parkingapi.model.parking.request;
 
 import com.parking.parkingapi.model.common.ParkingServiceType;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Map;
 
 /**
  * Request used for parking creation.
  */
+@Getter
+@Setter
 public class CreateParkingRequest {
 
   private String name;
@@ -18,47 +22,4 @@ public class CreateParkingRequest {
   private Map<ParkingServiceType, Integer> requestedSlots;
 
   private Long pricingPolicyId;
-
-  public CreateParkingRequest() {
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public String getAddress() {
-    return address;
-  }
-
-  public void setAddress(String address) {
-    this.address = address;
-  }
-
-  public String getCity() {
-    return city;
-  }
-
-  public void setCity(String city) {
-    this.city = city;
-  }
-
-  public Map<ParkingServiceType, Integer> getRequestedSlots() {
-    return requestedSlots;
-  }
-
-  public void setRequestedSlots(Map<ParkingServiceType, Integer> requestedSlots) {
-    this.requestedSlots = requestedSlots;
-  }
-
-  public Long getPricingPolicyId() {
-    return pricingPolicyId;
-  }
-
-  public void setPricingPolicyId(Long pricingPolicyId) {
-    this.pricingPolicyId = pricingPolicyId;
-  }
 }

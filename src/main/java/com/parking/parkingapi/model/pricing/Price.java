@@ -1,8 +1,13 @@
 package com.parking.parkingapi.model.pricing;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * The data model for storing Price information.
  */
+@Getter
+@Setter
 public class Price {
 
   private long amount;
@@ -14,22 +19,6 @@ public class Price {
 
   public Price(long amount, Currency currency) {
     this.amount = amount;
-    this.currency = currency;
-  }
-
-  public long getAmount() {
-    return amount;
-  }
-
-  public void setAmount(long amount) {
-    this.amount = amount;
-  }
-
-  public Currency getCurrency() {
-    return currency;
-  }
-
-  public void setCurrency(Currency currency) {
     this.currency = currency;
   }
 

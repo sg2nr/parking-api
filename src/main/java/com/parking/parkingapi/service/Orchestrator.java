@@ -1,5 +1,6 @@
 package com.parking.parkingapi.service;
 
+import com.parking.parkingapi.exception.ParkingApiException;
 import com.parking.parkingapi.model.common.ParkingApiDO;
 
 /**
@@ -20,5 +21,5 @@ public interface Orchestrator<T extends ParkingApiDO> {
    * @return
    * @throws Exception
    */
-  T run(T t) throws Exception;
+  T run(T t) throws ParkingApiException;
 }

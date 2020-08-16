@@ -1,5 +1,8 @@
 package com.parking.parkingapi.model.pricing;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.ZonedDateTime;
 import java.util.function.BiFunction;
 
@@ -9,18 +12,15 @@ import java.util.function.BiFunction;
  */
 public class AddFixedPricePolicy extends CompositePricingPolicy {
 
+  @Getter
+  @Setter
   private int fixedPrice;
 
-  public AddFixedPricePolicy(PricingPolicy basePolicy, Currency currency, Long id,  int fixedPrice) {
+  public AddFixedPricePolicy() {
+  }
+
+  public AddFixedPricePolicy(PricingPolicy basePolicy, Currency currency, Long id, int fixedPrice) {
     super(basePolicy, currency, id);
-    this.fixedPrice = fixedPrice;
-  }
-
-  public int getFixedPrice() {
-    return fixedPrice;
-  }
-
-  public void setFixedPrice(int fixedPrice) {
     this.fixedPrice = fixedPrice;
   }
 

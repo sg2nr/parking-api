@@ -1,5 +1,8 @@
 package com.parking.parkingapi.model.entities;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -7,6 +10,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "currencies")
+@Getter
+@Setter
 public class CurrencyEntity {
 
   @Id
@@ -21,22 +26,6 @@ public class CurrencyEntity {
 
   public CurrencyEntity(String code, int decimalPlaces) {
     this.code = code;
-    this.decimalPlaces = decimalPlaces;
-  }
-
-  public String getCode() {
-    return code;
-  }
-
-  public void setCode(String code) {
-    this.code = code;
-  }
-
-  public int getDecimalPlaces() {
-    return decimalPlaces;
-  }
-
-  public void setDecimalPlaces(int decimalPlaces) {
     this.decimalPlaces = decimalPlaces;
   }
 }

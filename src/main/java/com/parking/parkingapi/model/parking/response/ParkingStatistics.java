@@ -1,6 +1,8 @@
 package com.parking.parkingapi.model.parking.response;
 
 import com.parking.parkingapi.model.common.ParkingServiceType;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Map;
 
@@ -14,6 +16,8 @@ import java.util.Map;
  *   parkings with power supply.</li>
  * </ol>
  */
+@Getter
+@Setter
 public class ParkingStatistics {
 
   private ParkingStatus parkingStatus;
@@ -25,22 +29,6 @@ public class ParkingStatistics {
 
   public ParkingStatistics(ParkingStatus parkingStatus, Map<ParkingServiceType, ParkingStatus> statusPerType) {
     this.parkingStatus = parkingStatus;
-    this.statusPerType = statusPerType;
-  }
-
-  public ParkingStatus getParkingStatus() {
-    return parkingStatus;
-  }
-
-  public void setParkingStatus(ParkingStatus parkingStatus) {
-    this.parkingStatus = parkingStatus;
-  }
-
-  public Map<ParkingServiceType, ParkingStatus> getStatusPerType() {
-    return statusPerType;
-  }
-
-  public void setStatusPerType(Map<ParkingServiceType, ParkingStatus> statusPerType) {
     this.statusPerType = statusPerType;
   }
 }

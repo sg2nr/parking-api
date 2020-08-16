@@ -2,6 +2,8 @@ package com.parking.parkingapi.model.pricing;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.parking.parkingapi.exception.TemporaryDataInconsistencyException;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
@@ -14,17 +16,34 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include;
  */
 public class PricingPerHourPolicy implements PricingPolicy {
 
+  @Setter
   @JsonInclude(Include.NON_NULL)
   private Long id;
 
+  @Getter
+  @Setter
   private int pricePerHour;
 
-  private Currency currency;
+  @Setter
+  private Currency policyCurrency;
+
+  public PricingPerHourPolicy() {
+  }
 
   public PricingPerHourPolicy(int pricePerHour, Currency currency, Long id) {
     this.pricePerHour = pricePerHour;
-    this.currency = currency;
+    this.policyCurrency = currency;
     this.id = id;
+  }
+
+  @Override
+  public Currency getPolicyCurrency() {
+    return policyCurrency;
+  }
+
+  @Override
+  public Long getId() {
+    return id;
   }
 
   @Override
@@ -43,31 +62,5 @@ public class PricingPerHourPolicy implements PricingPolicy {
         .withAmount(totalAmount)
         .withCurrency(getPolicyCurrency())
         .build();
-  }
-
-  public int getPricePerHour() {
-    return pricePerHour;
-  }
-
-  public void setPricePerHour(int pricePerHour) {
-    this.pricePerHour = pricePerHour;
-  }
-
-  @Override
-  public Currency getPolicyCurrency() {
-    return currency;
-  }
-
-  public void setCurrency(Currency currency) {
-    this.currency = currency;
-  }
-
-  @Override
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
   }
 }

@@ -1,23 +1,25 @@
 package com.parking.parkingapi.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.parking.parkingapi.TestUtils;
-import com.parking.parkingapi.exception.EntityNotFoundException;
-import com.parking.parkingapi.model.parking.Parking;
 import com.parking.parkingapi.model.parking.response.DisplayParkingResponse;
 import com.parking.parkingapi.service.ParkingManagerService;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.util.StringUtils;
-import org.mockito.Mockito;
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -28,48 +30,50 @@ class ParkingControllerTest {
 
   private static final String PARKINGS_URL = "/parkings";
 
+  private static final String PARKING_ID_1 = "1";
+
+  private static final String PARKING_ID_1_EXPECTED_JSON_FILENAME =
+      "com/parking/parkingapi/controller/get_parking_1_expected_response.json";
+
+  private static final String PARKING_ID_NOT_EXISTING = "99999";
+
   @Autowired
   private MockMvc mockMvc;
 
-  @MockBean
+  @Autowired
   private ParkingManagerService parkingBusinessService;
 
   @Test
-  public void getExistingParking() throws Exception {
-    Parking parking = TestUtils.getTestParking();
-    long id1 = TestUtils.PARKING_ID_1;
+  void getExistingParking() throws Exception {
 
-    Mockito.when(parkingBusinessService.find(id1)).thenReturn(parking);
-
-    MvcResult result = mockMvc.perform(get(PARKINGS_URL + "/" + id1)).andReturn();
+    MvcResult result = mockMvc.perform(get(PARKINGS_URL + "/" + PARKING_ID_1)).andReturn();
 
     int status = result.getResponse().getStatus();
     assertEquals(HttpStatus.OK.value(), status);
 
-    String json = result.getResponse().getContentAsString();
+    // Actual response
+    String actualResponse = result.getResponse().getContentAsString();
+    assertFalse(StringUtils.isBlank(actualResponse));
     ObjectMapper mapper = new ObjectMapper();
-    DisplayParkingResponse parkingInResponse = mapper.readValue(json, DisplayParkingResponse.class);
-
+    DisplayParkingResponse parkingInResponse = mapper.readValue(actualResponse, DisplayParkingResponse.class);
     assertNotNull(parkingInResponse);
-    assertEquals(parking.getId(), parkingInResponse.getId());
-    assertEquals(parking.getName(), parkingInResponse.getName());
-    assertEquals(parking.getAddress(), parkingInResponse.getAddress());
-    assertEquals(parking.getCity(), parkingInResponse.getCity());
+
+    // expected response
+    Path path = Paths.get(ClassLoader.getSystemResource(PARKING_ID_1_EXPECTED_JSON_FILENAME).toURI());
+    String expectedResponse = new String(Files.readAllBytes(path));
+
+    JSONAssert.assertEquals(expectedResponse, actualResponse, JSONCompareMode.LENIENT);
   }
 
   @Test
-  public void getNotExistingParking() throws Exception {
-    long id1 = TestUtils.PARKING_ID_1;
-
-    Mockito.when(parkingBusinessService.find(Mockito.anyLong())).thenThrow(new EntityNotFoundException("Not found"));
-
-    MvcResult result = mockMvc.perform(get(PARKINGS_URL + "/" + id1)).andReturn();
+  void getNotExistingParking() throws Exception {
+    MvcResult result = mockMvc.perform(get(PARKINGS_URL + "/" + PARKING_ID_NOT_EXISTING)).andReturn();
 
     int status = result.getResponse().getStatus();
     assertEquals(HttpStatus.BAD_REQUEST.value(), status);
 
-    String json = result.getResponse().getContentAsString();
-    assertNotNull(json);
-    assertTrue(StringUtils.isBlank(json));
+    String actualResponse = result.getResponse().getContentAsString();
+    assertNotNull(actualResponse);
+    assertTrue(StringUtils.isBlank(actualResponse));
   }
 }

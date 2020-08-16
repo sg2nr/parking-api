@@ -3,6 +3,8 @@ package com.parking.parkingapi.model.order;
 import com.parking.parkingapi.model.common.ParkingApiDO;
 import com.parking.parkingapi.model.pricing.Price;
 import com.parking.parkingapi.model.vehicle.Vehicle;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.ZonedDateTime;
 
@@ -10,6 +12,7 @@ import java.time.ZonedDateTime;
  * The data model to support the check-in and check-out of a
  * vehicle.
  */
+@Getter @Setter
 public class Order implements ParkingApiDO {
 
   private Vehicle vehicle;
@@ -25,63 +28,4 @@ public class Order implements ParkingApiDO {
   private Price amount;
 
   private long orderId;
-
-  public Order() {
-  }
-
-  public Vehicle getVehicle() {
-    return vehicle;
-  }
-
-  public void setVehicle(Vehicle vehicle) {
-    this.vehicle = vehicle;
-  }
-
-  public long getParkingId() {
-    return parkingId;
-  }
-
-  public void setParkingId(long parkingId) {
-    this.parkingId = parkingId;
-  }
-
-  public long getSlotNumber() {
-    return slotNumber;
-  }
-
-  public void setSlotNumber(long slotNumber) {
-    this.slotNumber = slotNumber;
-  }
-
-  public ZonedDateTime getTimeStampIn() {
-    return timeStampIn;
-  }
-
-  public void setTimeStampIn(ZonedDateTime timeStampIn) {
-    this.timeStampIn = timeStampIn;
-  }
-
-  public ZonedDateTime getTimeStampOut() {
-    return timeStampOut;
-  }
-
-  public void setTimeStampOut(ZonedDateTime timeStampOut) {
-    this.timeStampOut = timeStampOut;
-  }
-
-  public Price getAmount() {
-    return amount;
-  }
-
-  public void setAmount(Price amount) {
-    this.amount = amount;
-  }
-
-  public long getOrderId() {
-    return orderId;
-  }
-
-  public void setOrderId(long orderId) {
-    this.orderId = orderId;
-  }
 }

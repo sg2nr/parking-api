@@ -1,0 +1,34 @@
+{
+  "id": 1,
+  "name": "Parking de la Promenade",
+  "address": "Promenade des Anglais",
+  "city": "Nice",
+  "statistics": {
+    "parkingStatus": {
+      "totalSlots": 6,
+      "freeSlots": 3
+    },
+    "statusPerType": {
+      "20KwPowerSupply": {
+        "totalSlots": 1,
+        "freeSlots": 0
+      },
+      "StandardParking": {
+        "totalSlots": 4,
+        "freeSlots": 3
+      },
+      "50KwPowerSupply": {
+        "totalSlots": 1,
+        "freeSlots": 0
+      }
+    }
+  },
+  "pricingPolicy": {
+    "id": 2,
+    "pricePerHour": 350,
+    "policyCurrency": {
+      "currencyCode": "EUR",
+      "decimalPlaces": 2
+    }
+  }
+}

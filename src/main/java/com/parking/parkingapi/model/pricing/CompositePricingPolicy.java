@@ -1,6 +1,7 @@
 package com.parking.parkingapi.model.pricing;
 
 import com.parking.parkingapi.exception.TemporaryDataInconsistencyException;
+import lombok.Getter;
 
 import java.time.ZonedDateTime;
 import java.util.Objects;
@@ -13,11 +14,15 @@ import java.util.function.BiFunction;
  */
 public abstract class CompositePricingPolicy implements PricingPolicy {
 
+  @Getter
   PricingPolicy basePolicy;
 
   Currency currency;
 
   Long id;
+
+  public CompositePricingPolicy() {
+  }
 
   public CompositePricingPolicy(PricingPolicy basePolicy) {
     this.basePolicy = basePolicy;
@@ -32,16 +37,6 @@ public abstract class CompositePricingPolicy implements PricingPolicy {
     this.currency = currency;
     this.id = id;
   }
-
-  /**
-   * It returns the Base Policy applied.
-   *
-   * @return
-   */
-  public PricingPolicy getBasePolicy() {
-    return basePolicy;
-  }
-
 
   @Override
   public Currency getPolicyCurrency() {

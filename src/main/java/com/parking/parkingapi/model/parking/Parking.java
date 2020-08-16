@@ -3,12 +3,16 @@ package com.parking.parkingapi.model.parking;
 import com.parking.parkingapi.model.common.ParkingApiDO;
 import com.parking.parkingapi.model.parkingslot.ParkingSlot;
 import com.parking.parkingapi.model.pricing.PricingPolicy;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 /**
  * The model representing a Parking lot.
  */
+@Getter
+@Setter
 public class Parking implements ParkingApiDO {
 
   private long id;
@@ -24,63 +28,4 @@ public class Parking implements ParkingApiDO {
   private Long pricingPolicyRequestId;
 
   private PricingPolicy pricingPolicy;
-
-  public Parking() {
-  }
-
-  public long getId() {
-    return id;
-  }
-
-  public void setId(long id) {
-    this.id = id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public String getAddress() {
-    return address;
-  }
-
-  public void setAddress(String address) {
-    this.address = address;
-  }
-
-  public String getCity() {
-    return city;
-  }
-
-  public void setCity(String city) {
-    this.city = city;
-  }
-
-  public List<ParkingSlot> getParkingSlots() {
-    return parkingSlots;
-  }
-
-  public void setParkingSlots(List<ParkingSlot> parkingSlots) {
-    this.parkingSlots = parkingSlots;
-  }
-
-  public PricingPolicy getPricingPolicy() {
-    return pricingPolicy;
-  }
-
-  public void setPricingPolicy(PricingPolicy pricingPolicy) {
-    this.pricingPolicy = pricingPolicy;
-  }
-
-  public Long getPricingPolicyRequestId() {
-    return pricingPolicyRequestId;
-  }
-
-  public void setPricingPolicyRequestId(Long pricingPolicyRequestId) {
-    this.pricingPolicyRequestId = pricingPolicyRequestId;
-  }
 }
