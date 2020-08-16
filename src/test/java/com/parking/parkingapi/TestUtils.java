@@ -7,14 +7,11 @@ import com.parking.parkingapi.model.entities.ParkingEntity;
 import com.parking.parkingapi.model.entities.ParkingSlotEntity;
 import com.parking.parkingapi.model.entities.PricingPolicyEntity;
 import com.parking.parkingapi.model.entities.VehicleEntity;
-import com.parking.parkingapi.model.order.Order;
 import com.parking.parkingapi.model.parking.Parking;
 import com.parking.parkingapi.model.parkingslot.ParkingSlot;
 import com.parking.parkingapi.model.pricing.Currency;
 import com.parking.parkingapi.model.pricing.PricingPerHourPolicy;
 import com.parking.parkingapi.model.pricing.PricingPolicy;
-import com.parking.parkingapi.model.vehicle.Car;
-import com.parking.parkingapi.model.vehicle.Vehicle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,24 +51,12 @@ public class TestUtils {
 
   public static final long PARKING_POLICY_1 = 1L;
 
-  public static final String PLATE = "AAA";
+  public static final String PLATE_1 = "AAA";
 
-  public static Order getTestOrderDOForCheckIn() {
-    Order order = new Order();
-
-    order.setParkingId(PARKING_ID_1);
-    order.setTimeStampIn(now());
-    order.setVehicle(getTestVehicle());
-
-    return order;
-  }
-
-  public static Vehicle getTestVehicle() {
-    return new Car(PLATE, ParkingServiceType.FIFTY_KW_POWER_SUPPLY);
-  }
+  public static final String PLATE_2 = "BBB";
 
   public static VehicleEntity getTestVehicleEntity() {
-    return new VehicleEntity(PLATE, EngineType.ELECTRICAL_FIFTY_KW);
+    return new VehicleEntity(PLATE_1, EngineType.ELECTRICAL_FIFTY_KW);
   }
 
   public static Parking getTestParking() {

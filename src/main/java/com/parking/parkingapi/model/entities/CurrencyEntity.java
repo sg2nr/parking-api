@@ -1,5 +1,6 @@
 package com.parking.parkingapi.model.entities;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +13,7 @@ import javax.persistence.Table;
 @Table(name = "currencies")
 @Getter
 @Setter
+@EqualsAndHashCode
 public class CurrencyEntity {
 
   @Id

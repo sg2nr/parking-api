@@ -1,17 +1,14 @@
 package com.parking.parkingapi.model.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import lombok.EqualsAndHashCode;
+
+import javax.persistence.*;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "pricing_policies")
+@EqualsAndHashCode
 public class PricingPolicyEntity {
 
   @Id

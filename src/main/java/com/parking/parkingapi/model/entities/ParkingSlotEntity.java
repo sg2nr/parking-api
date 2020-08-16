@@ -1,5 +1,6 @@
 package com.parking.parkingapi.model.entities;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +13,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Table(name = "parking_slots")
 @Getter
 @Setter
+@EqualsAndHashCode
 public class ParkingSlotEntity {
 
   @Id

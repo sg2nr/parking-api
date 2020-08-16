@@ -22,7 +22,7 @@ class ParkingJsonMapperTest {
   }
 
   @Test
-  public void testMappingToResponse() {
+  void testMappingToResponse() {
     Parking parking = TestUtils.getTestParking();
 
     DisplayParkingResponse displayParkingResponse = parkingJsonMapper.mapToResponse(parking);

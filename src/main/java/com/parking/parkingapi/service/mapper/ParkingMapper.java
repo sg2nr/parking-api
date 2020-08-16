@@ -5,8 +5,11 @@ import com.parking.parkingapi.model.entities.ParkingLogEntity;
 import com.parking.parkingapi.model.entities.ParkingSlotEntity;
 import com.parking.parkingapi.model.parking.Parking;
 import com.parking.parkingapi.model.parking.ParkingBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -19,6 +22,8 @@ import static java.util.stream.Collectors.toList;
  */
 @Component
 public class ParkingMapper {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(ParkingMapper.class);
 
   final ParkingSlotMapper parkingSlotMapper;
 
@@ -56,12 +61,17 @@ public class ParkingMapper {
   public Parking mapToParking(
       @NotNull ParkingEntity parkingEntity, @NotNull List<ParkingSlotEntity> slotEntities, @NotNull List<ParkingLogEntity> logEntities) {
 
+    long parkingId = parkingEntity.getId();
     List<ParkingSlotEntity> correspondingSlotEntities = slotEntities.stream()
         .filter(s -> Objects.equals(parkingEntity, s.getParkingEntity()))
         .collect(toList());
 
+    if (CollectionUtils.isEmpty(correspondingSlotEntities)) {
+      LOGGER.warn("No slots associated to PARKING ID {}.", parkingId);
+    }
+
     Parking parking = ParkingBuilder.builder()
-        .withId(parkingEntity.getId())
+        .withId(parkingId)
         .withName(parkingEntity.getName())
         .withAddress(parkingEntity.getAddress())
         .withCity(parkingEntity.getCity())

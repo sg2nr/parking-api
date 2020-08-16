@@ -68,7 +68,7 @@ public class ParkingSlotMapper {
   private Optional<VehicleEntity> getVehicleEntity(ParkingSlotEntity slotEntity, List<ParkingLogEntity> logEntities) {
     return logEntities.parallelStream()
         .filter(l -> Objects.isNull(l.getTimeStampOut()))
-        .filter(l -> Objects.equals(l.getParkingSlotEntity(), slotEntity))
+        .filter(l -> Objects.equals(l.getParkingSlotEntity().getId(), slotEntity.getId()))
         .map(ParkingLogEntity::getVehicleEntity)
         .findFirst();
   }

@@ -83,7 +83,7 @@ public class CheckInOrchestrator implements Orchestrator<Order> {
     return parkingLogsDao.save(logEntity);
   }
 
-  ParkingLogEntity createParkingLogEntity(Order order, VehicleEntity vehicleEntity)
+  private ParkingLogEntity createParkingLogEntity(Order order, VehicleEntity vehicleEntity)
       throws EntityNotFoundException, NoSlotAvailableException {
     ParkingSlotEntity parkingSlotEntity = getParkingSlotEntity(order);
     order.setSlotNumber(parkingSlotEntity.getSlotNumber());

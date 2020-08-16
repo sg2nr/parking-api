@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class PricingPolicyFactoryTest {
 
   @Test
-  public void testPerHourPricingPolicyCreation() {
+  void testPerHourPricingPolicyCreation() {
     // Get Test parking entity with pricing per hour policy
     ParkingEntity testParkingEntity = TestUtils.getTestParkingEntity();
 
@@ -29,7 +29,7 @@ class PricingPolicyFactoryTest {
   }
 
   @Test
-  public void testAddFixedPricePricingPolicyCreation() {
+  void testAddFixedPricePricingPolicyCreation() {
     // Get Test parking entity with pricing per hour policy
     ParkingEntity testParkingEntity = TestUtils.getTestParkingEntity();
 
