@@ -1,19 +1,13 @@
 package com.parking.parkingapi.service;
 
 import com.parking.parkingapi.TestUtils;
-import com.parking.parkingapi.dao.ParkingLogsDao;
 import com.parking.parkingapi.exception.NoPricingPolicyFound;
 import com.parking.parkingapi.exception.TemporaryDataInconsistencyException;
 import com.parking.parkingapi.model.entities.ParkingLogEntity;
 import com.parking.parkingapi.model.pricing.Price;
-import com.parking.parkingapi.service.mapper.ParkingServiceTypeConverter;
-import com.parking.parkingapi.service.mapper.VehicleMapper;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
@@ -22,28 +16,17 @@ import static java.time.ZonedDateTime.now;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.TestInstance.Lifecycle;
 
-@ExtendWith(SpringExtension.class)
-@TestInstance(Lifecycle.PER_CLASS)
+@SpringBootTest
 class CheckOutOrchestratorTest {
 
   public static final int HOURS_SPENT = 10;
+
+  @Autowired
   CheckOutOrchestrator checkOutOrchestrator;
 
-  ParkingLogsDao parkingLogsDao;
-
-  @BeforeAll
-  public void setUp() {
-    parkingLogsDao = Mockito.mock(ParkingLogsDao.class);
-    ParkingServiceTypeConverter parkingServiceTypeConverter = new ParkingServiceTypeConverter();
-    VehicleMapper vehicleMapper = new VehicleMapper(parkingServiceTypeConverter);
-
-    checkOutOrchestrator = new CheckOutOrchestrator(parkingLogsDao, vehicleMapper);
-  }
-
   @Test
-  public void testAmountComputationOk() throws TemporaryDataInconsistencyException, NoPricingPolicyFound {
+  void testAmountComputationOk() throws TemporaryDataInconsistencyException, NoPricingPolicyFound {
     ParkingLogEntity logEntity = getTestLogEntityForCheckout(now().minus(HOURS_SPENT, ChronoUnit.HOURS), now());
 
     Price amount = checkOutOrchestrator.computeAmount(logEntity);
@@ -55,7 +38,7 @@ class CheckOutOrchestratorTest {
   }
 
   @Test
-  public void testAmountComputationWithException() {
+  void testAmountComputationWithException() {
     ParkingLogEntity logEntity = getTestLogEntityForCheckout(now(), now().minus(HOURS_SPENT, ChronoUnit.HOURS));
     logEntity.getParkingSlotEntity().getParkingEntity().setPricingPolicyEntity(null);
 
@@ -72,7 +55,9 @@ class CheckOutOrchestratorTest {
     logEntity.setTimeStampOut(out);
     logEntity.setTimeStampIn(in);
     logEntity.setVehicleEntity(TestUtils.getTestVehicleEntity());
-    TestUtils.getTestParkingSlots().stream().findAny().ifPresent(logEntity::setParkingSlotEntity);
+    TestUtils.getTestParkingSlots().stream()
+        .findAny()
+        .ifPresent(logEntity::setParkingSlotEntity);
 
     return logEntity;
   }
