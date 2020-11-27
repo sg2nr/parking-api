@@ -439,6 +439,47 @@
 					"response": []
 				},
 				{
+					"name": "[Error case] Retrieve pricing policies with non valid Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d13b69bb-86bb-42ab-ba56-2060029bffa3",
+								"exec": [
+									"let response = pm.response.json();",
+									"",
+									"pm.test(\"Status code name has Bad Request\", function () {",
+									"    pm.response.to.have.status(\"Bad Request\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Acc",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/pricing-policies/string",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pricing-policies",
+								"string"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Check-in car in parking = 1 (price per hour = 3.50 EUR)",
 					"event": [
 						{
@@ -933,9 +974,16 @@
 							"script": {
 								"id": "d94023b0-bb2b-471e-98b7-a00fdc0912ff",
 								"exec": [
+									"const responseJson = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
 									"pm.test(\"Status is UP\", () => {\r",
-									"    pm.response.to.have.status(\"UP\");\r",
-									"});"
+									"    pm.expect(responseJson.status).to.be.equal.toString(\"UP\");\r",
+									"});\r",
+									""
 								],
 								"type": "text/javascript"
 							}
