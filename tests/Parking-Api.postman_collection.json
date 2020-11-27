@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a27dbd3e-d05f-49cc-8892-0c12c0255b8c",
+		"_postman_id": "76cd9d3d-8d1b-4fd8-a258-bd96c5e96b2f",
 		"name": "Parking-Api",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -14,7 +14,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "476044d4-8b22-4160-906e-be3419fb2ba2",
+								"id": "3fac88ea-cc94-45ca-b838-5ca8cd2c58bc",
 								"exec": [
 									"let response = pm.response.json();",
 									"",
@@ -72,7 +72,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "476044d4-8b22-4160-906e-be3419fb2ba2",
+								"id": "e51afeb2-ec7f-4a8d-aa83-5f30adc369c6",
 								"exec": [
 									"let response = pm.response.json();",
 									"",
@@ -127,7 +127,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5899ac6f-47c8-4699-b323-a24bf2cb2ba8",
+								"id": "dd81e6a0-ae07-46fb-b320-c12ffc6b6fa9",
 								"exec": [
 									"let response = pm.response.json();",
 									"",
@@ -174,7 +174,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "476044d4-8b22-4160-906e-be3419fb2ba2",
+								"id": "1cf912b2-a6be-4170-b825-f49ea2c3da7c",
 								"exec": [
 									"let response = pm.response.json();",
 									"",
@@ -228,7 +228,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5899ac6f-47c8-4699-b323-a24bf2cb2ba8",
+								"id": "3a9b7e2f-b2ca-4903-aac4-0ac2568be196",
 								"exec": [
 									"let response = pm.response.json();",
 									"",
@@ -292,7 +292,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5899ac6f-47c8-4699-b323-a24bf2cb2ba8",
+								"id": "914fbf88-6d6c-4ad5-a83b-f5df26322a09",
 								"exec": [
 									"let response = pm.response.json();",
 									"",
@@ -348,7 +348,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "476044d4-8b22-4160-906e-be3419fb2ba2",
+								"id": "fdba4234-78a2-4b96-a139-a5a4026b94dc",
 								"exec": [
 									"pm.test(\"Successful DELETE request\", function () {",
 									"    pm.response.to.have.status(204);",
@@ -393,7 +393,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "476044d4-8b22-4160-906e-be3419fb2ba2",
+								"id": "84ba7cd6-23db-4d49-93d0-3f801e57f0c6",
 								"exec": [
 									"let response = pm.response.json();",
 									"",
@@ -444,7 +444,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5899ac6f-47c8-4699-b323-a24bf2cb2ba8",
+								"id": "36606aaf-6523-4ab9-a689-0337458bc98a",
 								"exec": [
 									"let response = pm.response.json();",
 									"",
@@ -508,7 +508,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5899ac6f-47c8-4699-b323-a24bf2cb2ba8",
+								"id": "37aee87a-8d07-4b74-be92-b6c57dbbf635",
 								"exec": [
 									"let response = pm.response.json();",
 									"",
@@ -566,7 +566,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5899ac6f-47c8-4699-b323-a24bf2cb2ba8",
+								"id": "02091157-276a-4f30-855d-ecae3dfae549",
 								"exec": [
 									"let response = pm.response.json();",
 									"",
@@ -624,7 +624,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5899ac6f-47c8-4699-b323-a24bf2cb2ba8",
+								"id": "ce3be1c7-37fe-460e-9490-f2b81f9d27f8",
 								"exec": [
 									"let response = pm.response.json();",
 									"",
@@ -699,7 +699,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5899ac6f-47c8-4699-b323-a24bf2cb2ba8",
+								"id": "03910d9b-f9b4-4ba6-89d6-c82875073fb4",
 								"exec": [
 									"let response = pm.response.json();",
 									"",
@@ -765,7 +765,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5899ac6f-47c8-4699-b323-a24bf2cb2ba8",
+								"id": "300e35fb-e8aa-4749-8679-80bd8d3dfb86",
 								"exec": [
 									"let response = pm.response.json();",
 									"",
@@ -840,7 +840,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5899ac6f-47c8-4699-b323-a24bf2cb2ba8",
+								"id": "ed867057-03dc-45ba-bcd3-52054d9badd7",
 								"exec": [
 									"let response = pm.response.json();",
 									"",
@@ -902,7 +902,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "11fe322f-bcfc-40b6-9b43-6a56e5bda10b",
+						"id": "c31ce379-884e-45cc-824b-1ad0a4a85401",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -912,12 +912,51 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "beee41fa-bdc1-4a79-ab4c-fe556da7d976",
+						"id": "23f42ea2-d110-4370-8e40-4ba11627f2a9",
 						"type": "text/javascript",
 						"exec": [
 							""
 						]
 					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "actuator",
+			"item": [
+				{
+					"name": "Health",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d94023b0-bb2b-471e-98b7-a00fdc0912ff",
+								"exec": [
+									"pm.test(\"Status is UP\", () => {\r",
+									"    pm.response.to.have.status(\"UP\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/actuator/health",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"actuator",
+								"health"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
