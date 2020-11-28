@@ -993,11 +993,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8081/actuator/health",
+							"raw": "localhost:8080/actuator/health",
 							"host": [
 								"localhost"
 							],
-							"port": "8081",
+							"port": "8080",
 							"path": [
 								"actuator",
 								"health"
