@@ -1,6 +1,6 @@
 # parking-api
 
-https://travis-ci.com/sg2nr/parking-api.svg?branch=master
+[![Build Status](https://travis-ci.com/sg2nr/parking-api.svg?branch=master)](https://travis-ci.com/sg2nr/parking-api)
 
 Parking-API is a RESTful API project developed on Java.
 The goal of this application is to handle several toll parkings.
