@@ -23,15 +23,14 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-/**
- * The aim of this orchestrator is to assign a vehicle to a free parking slot.
- */
+/** The aim of this orchestrator is to assign a vehicle to a free parking slot. */
 @Component
 public class CheckInOrchestrator implements Orchestrator<Order> {
 
   private static final Logger LOG = LoggerFactory.getLogger(CheckInOrchestrator.class);
 
-  private static final String VEHICLE_ALREADY_PARKED_ERROR_MESSAGE = "It is not possible to park a vehicle which results already parked.";
+  private static final String VEHICLE_ALREADY_PARKED_ERROR_MESSAGE =
+      "It is not possible to park a vehicle which results already parked.";
 
   private static final String NO_SLOT_AVAILABLE_ERROR_MESSAGE = "No slot available in parking %s";
 
@@ -49,8 +48,11 @@ public class CheckInOrchestrator implements Orchestrator<Order> {
 
   @Autowired
   public CheckInOrchestrator(
-      ParkingManagerService parkingManagerService, VehicleManagerService vehicleManagerService,
-      VehicleMapper vehicleMapper, ParkingSlotDao parkingSlotDao, ParkingLogsDao parkingLogsDao) {
+      ParkingManagerService parkingManagerService,
+      VehicleManagerService vehicleManagerService,
+      VehicleMapper vehicleMapper,
+      ParkingSlotDao parkingSlotDao,
+      ParkingLogsDao parkingLogsDao) {
     this.parkingManagerService = parkingManagerService;
     this.vehicleManagerService = vehicleManagerService;
     this.vehicleMapper = vehicleMapper;
@@ -59,8 +61,9 @@ public class CheckInOrchestrator implements Orchestrator<Order> {
   }
 
   @Override
-  public Order run(Order order) throws EntityCreationViolation, NoSlotAvailableException,
-      VehicleAlreadyParkedException, EntityNotFoundException {
+  public Order run(Order order)
+      throws EntityCreationViolation, NoSlotAvailableException, VehicleAlreadyParkedException,
+          EntityNotFoundException {
 
     Vehicle vehicle = vehicleManagerService.create(order.getVehicle());
     VehicleEntity vehicleEntity = vehicleMapper.mapToEntity(vehicle);
@@ -77,7 +80,8 @@ public class CheckInOrchestrator implements Orchestrator<Order> {
     return order;
   }
 
-  private ParkingLogEntity registerCheckIn(Order order, VehicleEntity vehicleEntity) throws EntityNotFoundException, NoSlotAvailableException {
+  private ParkingLogEntity registerCheckIn(Order order, VehicleEntity vehicleEntity)
+      throws EntityNotFoundException, NoSlotAvailableException {
     ParkingLogEntity logEntity = createParkingLogEntity(order, vehicleEntity);
 
     return parkingLogsDao.save(logEntity);
@@ -99,21 +103,27 @@ public class CheckInOrchestrator implements Orchestrator<Order> {
       throws EntityNotFoundException, NoSlotAvailableException {
     Parking parking = parkingManagerService.find(order.getParkingId());
 
-    Optional<ParkingSlot> parkingSlotOptional = parking.getParkingSlots().stream()
-        .filter(ParkingSlot::isFree)
-        .filter(s -> Objects.equals(order.getVehicle().getRequestedService(), s.getOfferedService()))
-        .findAny();
+    Optional<ParkingSlot> parkingSlotOptional =
+        parking.getParkingSlots().stream()
+            .filter(ParkingSlot::isFree)
+            .filter(
+                s ->
+                    Objects.equals(order.getVehicle().getRequestedService(), s.getOfferedService()))
+            .findAny();
 
-    ParkingSlot parkingSlot = parkingSlotOptional
-        .orElseThrow(() -> new NoSlotAvailableException(String.format(NO_SLOT_AVAILABLE_ERROR_MESSAGE, parking.getId())));
+    ParkingSlot parkingSlot =
+        parkingSlotOptional.orElseThrow(
+            () ->
+                new NoSlotAvailableException(
+                    String.format(NO_SLOT_AVAILABLE_ERROR_MESSAGE, parking.getId())));
 
-    return parkingSlotDao.findById(parkingSlot.getId())
+    return parkingSlotDao
+        .findById(parkingSlot.getId())
         .orElseThrow(() -> new EntityNotFoundException(SLOT_ENTITY_NOT_FOUND_ERROR_MESSAGE));
   }
 
   private boolean isCurrentlyParked(VehicleEntity vehicleEntity) {
     List<ParkingLogEntity> logsByVehicle = parkingLogsDao.findByVehicleEntity(vehicleEntity);
-    return logsByVehicle.stream()
-        .anyMatch(l -> Objects.isNull(l.getTimeStampOut()));
+    return logsByVehicle.stream().anyMatch(l -> Objects.isNull(l.getTimeStampOut()));
   }
 }
