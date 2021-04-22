@@ -3,23 +3,18 @@ package com.parking.parkingapi.controller.mapper;
 import com.parking.parkingapi.TestUtils;
 import com.parking.parkingapi.model.parking.Parking;
 import com.parking.parkingapi.model.parking.response.DisplayParkingResponse;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.TestInstance.Lifecycle;
 
-@TestInstance(Lifecycle.PER_CLASS)
+@SpringBootTest
 class ParkingJsonMapperTest {
 
+  @Autowired
   private ParkingJsonMapper parkingJsonMapper;
-
-  @BeforeAll
-  public void setUp() {
-    parkingJsonMapper = new ParkingJsonMapper();
-  }
 
   @Test
   void testMappingToResponse() {

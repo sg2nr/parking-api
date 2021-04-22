@@ -7,18 +7,16 @@ import com.parking.parkingapi.model.order.request.OrderRequest;
 import com.parking.parkingapi.model.order.response.OrderResponse;
 import com.parking.parkingapi.model.vehicle.Car;
 import com.parking.parkingapi.model.vehicle.Vehicle;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.ZonedDateTime;
 
 import static java.time.ZonedDateTime.now;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@SpringBootTest
 class OrderJsonMapperTest {
 
   private static final int ORDER_ID = 589;
@@ -29,12 +27,8 @@ class OrderJsonMapperTest {
 
   private static final int SLOT_NUMBER = 5;
 
+  @Autowired
   OrderJsonMapper orderJsonMapper;
-
-  @BeforeAll
-  public void setUp() {
-    orderJsonMapper = new OrderJsonMapper();
-  }
 
   @Test
   public void testMapCheckIn() throws InvalidInputDataException {
