@@ -11,6 +11,7 @@ import com.parking.parkingapi.model.vehicle.Car;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import static java.time.ZonedDateTime.now;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -20,13 +21,15 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
+@Transactional
 class CheckInOrchestratorTest {
 
-  @Autowired
-  CheckInOrchestrator checkInOrchestrator;
+  @Autowired CheckInOrchestrator checkInOrchestrator;
 
   @Test
-  void testCheckIn() throws NoSlotAvailableException, EntityNotFoundException, EntityCreationViolation, VehicleAlreadyParkedException {
+  void testCheckIn()
+      throws NoSlotAvailableException, EntityNotFoundException, EntityCreationViolation,
+          VehicleAlreadyParkedException {
     Order checkInOrder = createOrderRequestWithStandardCar();
 
     Order confirmationOrder = checkInOrchestrator.run(checkInOrder);
@@ -63,5 +66,4 @@ class CheckInOrchestratorTest {
 
     return order;
   }
-
 }
