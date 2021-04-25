@@ -6,25 +6,25 @@ import com.parking.parkingapi.exception.EntityCreationViolation;
 import com.parking.parkingapi.exception.EntityNotFoundException;
 import com.parking.parkingapi.exception.NoSlotAvailableException;
 import com.parking.parkingapi.exception.VehicleAlreadyParkedException;
-import com.parking.parkingapi.model.order.Order;
-import com.parking.parkingapi.model.vehicle.Vehicle;
 import com.parking.parkingapi.model.entities.ParkingLogEntity;
 import com.parking.parkingapi.model.entities.ParkingSlotEntity;
 import com.parking.parkingapi.model.entities.VehicleEntity;
+import com.parking.parkingapi.model.order.Order;
 import com.parking.parkingapi.model.parking.Parking;
 import com.parking.parkingapi.model.parkingslot.ParkingSlot;
+import com.parking.parkingapi.model.vehicle.Vehicle;
 import com.parking.parkingapi.service.mapper.VehicleMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 /** The aim of this orchestrator is to assign a vehicle to a free parking slot. */
-@Component
+@Service
 public class CheckInOrchestrator implements Orchestrator<Order> {
 
   private static final Logger LOG = LoggerFactory.getLogger(CheckInOrchestrator.class);

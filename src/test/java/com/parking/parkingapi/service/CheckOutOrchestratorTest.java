@@ -22,12 +22,12 @@ class CheckOutOrchestratorTest {
 
   public static final int HOURS_SPENT = 10;
 
-  @Autowired
-  CheckOutOrchestrator checkOutOrchestrator;
+  @Autowired CheckOutOrchestrator checkOutOrchestrator;
 
   @Test
   void testAmountComputationOk() throws TemporaryDataInconsistencyException, NoPricingPolicyFound {
-    ParkingLogEntity logEntity = getTestLogEntityForCheckout(now().minus(HOURS_SPENT, ChronoUnit.HOURS), now());
+    ParkingLogEntity logEntity =
+        getTestLogEntityForCheckout(now().minus(HOURS_SPENT, ChronoUnit.HOURS), now());
 
     Price amount = checkOutOrchestrator.computeAmount(logEntity);
 
@@ -39,10 +39,13 @@ class CheckOutOrchestratorTest {
 
   @Test
   void testAmountComputationWithException() {
-    ParkingLogEntity logEntity = getTestLogEntityForCheckout(now(), now().minus(HOURS_SPENT, ChronoUnit.HOURS));
+    ParkingLogEntity logEntity =
+        getTestLogEntityForCheckout(now(), now().minus(HOURS_SPENT, ChronoUnit.HOURS));
     logEntity.getParkingSlotEntity().getParkingEntity().setPricingPolicyEntity(null);
 
-    Exception exception = assertThrows(NoPricingPolicyFound.class, () -> checkOutOrchestrator.computeAmount(logEntity));
+    Exception exception =
+        assertThrows(
+            NoPricingPolicyFound.class, () -> checkOutOrchestrator.computeAmount(logEntity));
 
     String expectedMessage = "No pricing policy found for parking id: 1";
     String actualMessage = exception.getMessage();
@@ -55,11 +58,8 @@ class CheckOutOrchestratorTest {
     logEntity.setTimeStampOut(out);
     logEntity.setTimeStampIn(in);
     logEntity.setVehicleEntity(TestUtils.getTestVehicleEntity());
-    TestUtils.getTestParkingSlots().stream()
-        .findAny()
-        .ifPresent(logEntity::setParkingSlotEntity);
+    TestUtils.getTestParkingSlots().stream().findAny().ifPresent(logEntity::setParkingSlotEntity);
 
     return logEntity;
   }
-
 }

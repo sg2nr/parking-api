@@ -27,7 +27,7 @@ class CheckInOrchestratorTest {
   @Autowired CheckInOrchestrator checkInOrchestrator;
 
   @Test
-  void testCheckIn()
+  void testCheckInShouldBeSuccessful()
       throws NoSlotAvailableException, EntityNotFoundException, EntityCreationViolation,
           VehicleAlreadyParkedException {
     Order checkInOrder = createOrderRequestWithStandardCar();

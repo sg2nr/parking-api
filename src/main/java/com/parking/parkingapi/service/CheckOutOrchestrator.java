@@ -17,26 +17,27 @@ import com.parking.parkingapi.service.mapper.VehicleMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
 import java.util.Objects;
 import java.util.Optional;
 
 /**
- * This service is responsible to remove a vehicle from a parking slot and compute
- * the final price.
+ * This service is responsible to remove a vehicle from a parking slot and compute the final price.
  */
-@Component
+@Service
 public class CheckOutOrchestrator implements Orchestrator<Order> {
 
   private static final Logger LOG = LoggerFactory.getLogger(CheckOutOrchestrator.class);
 
-  private static final String NO_POLICY_FOUND_ERROR_MESSAGE = "No pricing policy found for parking id: %s";
+  private static final String NO_POLICY_FOUND_ERROR_MESSAGE =
+      "No pricing policy found for parking id: %s";
 
   private static final String ORDER_NOT_FOUND_ERROR_MESSAGE = "Order id: %s not found";
 
-  private static final String CHECKOUT_ALREADY_PERFOMED_ERROR_MESSAGE = "Checkout already perfomed.";
+  private static final String CHECKOUT_ALREADY_PERFOMED_ERROR_MESSAGE =
+      "Checkout already perfomed.";
 
   private final ParkingLogsDao parkingLogsDao;
 
@@ -49,8 +50,9 @@ public class CheckOutOrchestrator implements Orchestrator<Order> {
   }
 
   @Override
-  public Order run(Order order) throws OrderNotFoundException, NoPricingPolicyFound,
-      TemporaryDataInconsistencyException, CheckOutAlreadyPerformedException {
+  public Order run(Order order)
+      throws OrderNotFoundException, NoPricingPolicyFound, TemporaryDataInconsistencyException,
+          CheckOutAlreadyPerformedException {
 
     long orderId = order.getOrderId();
 
@@ -72,11 +74,14 @@ public class CheckOutOrchestrator implements Orchestrator<Order> {
         .build();
   }
 
-  private ParkingLogEntity updateLog(long orderId) throws OrderNotFoundException, CheckOutAlreadyPerformedException {
+  private ParkingLogEntity updateLog(long orderId)
+      throws OrderNotFoundException, CheckOutAlreadyPerformedException {
     Optional<ParkingLogEntity> optionalLog = parkingLogsDao.findById(orderId);
 
-    ParkingLogEntity log = optionalLog
-        .orElseThrow(() -> new OrderNotFoundException(String.format(ORDER_NOT_FOUND_ERROR_MESSAGE, orderId)));
+    ParkingLogEntity log =
+        optionalLog.orElseThrow(
+            () ->
+                new OrderNotFoundException(String.format(ORDER_NOT_FOUND_ERROR_MESSAGE, orderId)));
 
     if (Objects.nonNull(log.getTimeStampOut())) {
       LOG.error(CHECKOUT_ALREADY_PERFOMED_ERROR_MESSAGE);
@@ -88,15 +93,19 @@ public class CheckOutOrchestrator implements Orchestrator<Order> {
     return parkingLogsDao.save(log);
   }
 
-  Price computeAmount(ParkingLogEntity savedLog) throws NoPricingPolicyFound, TemporaryDataInconsistencyException {
+  Price computeAmount(ParkingLogEntity savedLog)
+      throws NoPricingPolicyFound, TemporaryDataInconsistencyException {
     ParkingEntity parkingEntity = savedLog.getParkingSlotEntity().getParkingEntity();
-    PricingPolicy pricingPolicy = PricingPolicyFactory.createPricingPolicy(parkingEntity)
-        .orElseThrow(() -> new NoPricingPolicyFound(String.format(NO_POLICY_FOUND_ERROR_MESSAGE, parkingEntity.getId())));
+    PricingPolicy pricingPolicy =
+        PricingPolicyFactory.createPricingPolicy(parkingEntity)
+            .orElseThrow(
+                () ->
+                    new NoPricingPolicyFound(
+                        String.format(NO_POLICY_FOUND_ERROR_MESSAGE, parkingEntity.getId())));
 
     ZonedDateTime timeStampIn = savedLog.getTimeStampIn();
     ZonedDateTime timeStampOut = savedLog.getTimeStampOut();
 
     return pricingPolicy.calculateAmount(timeStampIn, timeStampOut);
   }
-
 }
