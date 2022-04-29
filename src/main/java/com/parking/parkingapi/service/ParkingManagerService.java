@@ -16,7 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -26,17 +26,17 @@ import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
-/**
- * This class is responsible for the Parking business logic.
- */
-@Component
+/** This class is responsible for the Parking business logic. */
+@Service
 public class ParkingManagerService implements ManagerService<Parking, Long> {
 
   private static final Logger LOG = LoggerFactory.getLogger(ParkingManagerService.class);
 
-  private static final String RETRIEVE_PARKING_ERROR_MESSAGE = "Impossible to retrieve parking with id: %s.";
+  private static final String RETRIEVE_PARKING_ERROR_MESSAGE =
+      "Impossible to retrieve parking with id: %s.";
 
-  private static final String CREATION_PARKING_ERROR_MESSAGE = "Impossible to create the requested parking.";
+  private static final String CREATION_PARKING_ERROR_MESSAGE =
+      "Impossible to create the requested parking.";
 
   private final ParkingDao parkingDao;
 
@@ -52,8 +52,12 @@ public class ParkingManagerService implements ManagerService<Parking, Long> {
 
   @Autowired
   public ParkingManagerService(
-      ParkingDao parkingDao, ParkingSlotDao parkingSlotDao, ParkingLogsDao parkingLogsDao,
-      ParkingMapper mapper, ParkingSlotMapper slotMapper, PricingPolicyDao pricingPolicyDao) {
+      ParkingDao parkingDao,
+      ParkingSlotDao parkingSlotDao,
+      ParkingLogsDao parkingLogsDao,
+      ParkingMapper mapper,
+      ParkingSlotMapper slotMapper,
+      PricingPolicyDao pricingPolicyDao) {
     this.parkingDao = parkingDao;
     this.parkingSlotDao = parkingSlotDao;
     this.parkingLogsDao = parkingLogsDao;
@@ -81,7 +85,8 @@ public class ParkingManagerService implements ManagerService<Parking, Long> {
       ParkingEntity createdEntity = parkingDao.save(parkingEntity);
 
       // Create the parking slots
-      List<ParkingSlotEntity> slotEntities = slotMapper.mapSlotsToEntities(parkingEntity, createParkingRequest.getParkingSlots());
+      List<ParkingSlotEntity> slotEntities =
+          slotMapper.mapSlotsToEntities(parkingEntity, createParkingRequest.getParkingSlots());
       List<ParkingSlotEntity> createdSlotEntities = parkingSlotDao.saveAll(slotEntities);
 
       return mapper.mapToParking(createdEntity, createdSlotEntities, new ArrayList<>());

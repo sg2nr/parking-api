@@ -56,13 +56,13 @@ public class CheckOutOrchestrator implements Orchestrator<Order> {
 
     long orderId = order.getOrderId();
 
-    ParkingLogEntity savedLog = updateLog(orderId);
+    ParkingLogEntity savedLog = checkOut(orderId);
 
     Price amount = computeAmount(savedLog);
 
-    // Mapping
     Vehicle vehicle = vehicleMapper.mapToVehicle(savedLog.getVehicleEntity());
     ParkingEntity parkingEntity = savedLog.getParkingSlotEntity().getParkingEntity();
+
     return OrderBuilder.builder()
         .withOrderId(orderId)
         .withTimeStampIn(savedLog.getTimeStampIn())
@@ -74,7 +74,7 @@ public class CheckOutOrchestrator implements Orchestrator<Order> {
         .build();
   }
 
-  private ParkingLogEntity updateLog(long orderId)
+  private ParkingLogEntity checkOut(long orderId)
       throws OrderNotFoundException, CheckOutAlreadyPerformedException {
     Optional<ParkingLogEntity> optionalLog = parkingLogsDao.findById(orderId);
 

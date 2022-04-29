@@ -6,7 +6,7 @@ import com.parking.parkingapi.model.entities.PricingPolicyEntity;
 import com.parking.parkingapi.model.pricing.PricingPolicy;
 import com.parking.parkingapi.service.mapper.PricingPolicyFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -14,10 +14,8 @@ import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
-/**
- * Service responsible to support CRUD operations related to pricing policy.
- */
-@Component
+/** Service responsible to support CRUD operations related to pricing policy. */
+@Service
 public class PricingManagerService implements ManagerService<PricingPolicy, Long> {
 
   private static final String PRICING_POLICY_NOT_FOUND_ERROR_MESSAGE = "PricingPolicy not found.";
@@ -58,8 +56,10 @@ public class PricingManagerService implements ManagerService<PricingPolicy, Long
     // Not implemented
   }
 
-  private PricingPolicyEntity findPricingPolicyEntity(Long pricingPolicyId) throws EntityNotFoundException {
-    return pricingPolicyDao.findById(pricingPolicyId)
+  private PricingPolicyEntity findPricingPolicyEntity(Long pricingPolicyId)
+      throws EntityNotFoundException {
+    return pricingPolicyDao
+        .findById(pricingPolicyId)
         .orElseThrow(() -> new EntityNotFoundException(PRICING_POLICY_NOT_FOUND_ERROR_MESSAGE));
   }
 }

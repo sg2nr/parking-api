@@ -3,25 +3,26 @@ package com.parking.parkingapi.service;
 import com.parking.parkingapi.dao.VehicleDao;
 import com.parking.parkingapi.exception.EntityCreationViolation;
 import com.parking.parkingapi.exception.EntityNotFoundException;
-import com.parking.parkingapi.model.vehicle.Vehicle;
 import com.parking.parkingapi.model.entities.VehicleEntity;
+import com.parking.parkingapi.model.vehicle.Vehicle;
 import com.parking.parkingapi.service.mapper.VehicleMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
-@Component
+@Service
 public class VehicleManagerService implements ManagerService<Vehicle, String> {
 
   private static final Logger LOG = LoggerFactory.getLogger(VehicleManagerService.class);
 
-  private static final String CREATION_VEHICLE_ERROR_MESSAGE = "Impossible to create the requested vehicle";
+  private static final String CREATION_VEHICLE_ERROR_MESSAGE =
+      "Impossible to create the requested vehicle";
 
   private final VehicleDao vehicleDao;
 
@@ -46,8 +47,7 @@ public class VehicleManagerService implements ManagerService<Vehicle, String> {
     try {
       VehicleEntity createdVehicle = vehicleDao.save(vehicleEntity);
       return vehicleMapper.mapToVehicle(createdVehicle);
-    } catch (
-        DataIntegrityViolationException e) {
+    } catch (DataIntegrityViolationException e) {
       LOG.error(CREATION_VEHICLE_ERROR_MESSAGE);
       throw new EntityCreationViolation(CREATION_VEHICLE_ERROR_MESSAGE);
     }
@@ -55,9 +55,7 @@ public class VehicleManagerService implements ManagerService<Vehicle, String> {
 
   @Override
   public List<Vehicle> findAll() {
-    return vehicleDao.findAll().stream()
-        .map(vehicleMapper::mapToVehicle)
-        .collect(toList());
+    return vehicleDao.findAll().stream().map(vehicleMapper::mapToVehicle).collect(toList());
   }
 
   @Override
@@ -66,7 +64,8 @@ public class VehicleManagerService implements ManagerService<Vehicle, String> {
   }
 
   private VehicleEntity findVehicleEntityByPlate(String plate) throws EntityNotFoundException {
-    return vehicleDao.findByPlate(plate)
+    return vehicleDao
+        .findByPlate(plate)
         .orElseThrow(() -> new EntityNotFoundException("Vehicle not found"));
   }
 }
