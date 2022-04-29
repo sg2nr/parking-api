@@ -21,15 +21,15 @@ public abstract class CompositePricingPolicy implements PricingPolicy {
 
   Long id;
 
-  public CompositePricingPolicy() {
+  protected CompositePricingPolicy() {
   }
 
-  public CompositePricingPolicy(PricingPolicy basePolicy) {
+  protected CompositePricingPolicy(PricingPolicy basePolicy) {
     this.basePolicy = basePolicy;
     currency = basePolicy.getPolicyCurrency();
   }
 
-  public CompositePricingPolicy(PricingPolicy basePolicy, Currency currency, Long id) {
+  protected CompositePricingPolicy(PricingPolicy basePolicy, Currency currency, Long id) {
     if (!Objects.equals(basePolicy.getPolicyCurrency(), currency)) {
       throw new IllegalArgumentException("All pricing policies must use the same currency");
     }

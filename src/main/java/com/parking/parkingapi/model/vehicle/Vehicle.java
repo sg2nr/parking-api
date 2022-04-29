@@ -16,7 +16,7 @@ public abstract class Vehicle implements ParkingApiDO {
 
   private ParkingServiceType requestedService;
 
-  public Vehicle(String plate, ParkingServiceType requestedService) {
+  protected Vehicle(String plate, ParkingServiceType requestedService) {
     this.plate = plate;
     this.requestedService = requestedService;
   }

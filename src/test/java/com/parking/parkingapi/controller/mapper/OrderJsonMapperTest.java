@@ -31,7 +31,7 @@ class OrderJsonMapperTest {
   OrderJsonMapper orderJsonMapper;
 
   @Test
-  public void testMapCheckIn() throws InvalidInputDataException {
+  void testMapCheckIn() throws InvalidInputDataException {
     OrderRequest orderRequest = new OrderRequest();
     orderRequest.setCarPlate(CAR_PLATE);
     orderRequest.setServiceRequested(ParkingServiceType.FIFTY_KW_POWER_SUPPLY);
@@ -45,7 +45,7 @@ class OrderJsonMapperTest {
   }
 
   @Test
-  public void testMapCheckInInvalidData() {
+  void testMapCheckInInvalidData() {
     OrderRequest orderRequest = new OrderRequest();
     orderRequest.setCarPlate(CAR_PLATE);
 
@@ -59,7 +59,7 @@ class OrderJsonMapperTest {
   }
 
   @Test
-  public void testMapToResponse() {
+  void testMapToResponse() {
     Order order = new Order();
     ZonedDateTime dateTime = now();
     order.setTimeStampIn(dateTime);

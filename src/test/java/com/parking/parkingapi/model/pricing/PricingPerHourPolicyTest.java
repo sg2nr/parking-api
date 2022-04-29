@@ -37,7 +37,7 @@ class PricingPerHourPolicyTest {
   }
 
   @Test
-  public void testLessThanOneHourTotalAmount() throws TemporaryDataInconsistencyException {
+  void testLessThanOneHourTotalAmount() throws TemporaryDataInconsistencyException {
     ZonedDateTime in = ZonedDateTime.now();
     ZonedDateTime out = ZonedDateTime.now();
 
@@ -49,7 +49,7 @@ class PricingPerHourPolicyTest {
   }
 
   @Test
-  public void testExactlyOneHourTotalAmount() throws TemporaryDataInconsistencyException {
+  void testExactlyOneHourTotalAmount() throws TemporaryDataInconsistencyException {
     ZonedDateTime in = ZonedDateTime.now();
     ZonedDateTime out = in.plus(1, ChronoUnit.HOURS);
 
@@ -61,7 +61,7 @@ class PricingPerHourPolicyTest {
   }
 
   @Test
-  public void testWrongTemporalData() {
+  void testWrongTemporalData() {
     ZonedDateTime in = ZonedDateTime.now();
     ZonedDateTime out = in.minus(10, ChronoUnit.HOURS);
 

@@ -63,7 +63,7 @@ class ParkingManagerServiceTest {
   }
 
   @Test
-  public void testFindById() throws EntityNotFoundException {
+  void testFindById() throws EntityNotFoundException {
     ParkingEntity testParkingEntity = TestUtils.getTestParkingEntity();
     Mockito.when(parkingDao.findById(anyLong())).thenReturn(of(testParkingEntity));
 
@@ -81,7 +81,7 @@ class ParkingManagerServiceTest {
   }
 
   @Test
-  public void testFindParkingNotExists() {
+  void testFindParkingNotExists() {
     Mockito.when(parkingDao.findById(TestUtils.PARKING_ID_1)).thenReturn(Optional.empty());
     Mockito.when(parkingSlotDao.findByParkingEntity(any())).thenReturn(new ArrayList<>());
     Mockito.when(parkingLogsDao.findAll()).thenReturn(new ArrayList<>());
@@ -96,7 +96,7 @@ class ParkingManagerServiceTest {
   }
 
   @Test
-  public void testDeleteParkingNotExists() {
+  void testDeleteParkingNotExists() {
     Mockito.when(parkingDao.findById(anyLong())).thenReturn(Optional.empty());
 
     Exception exception = assertThrows(EntityNotFoundException.class,
